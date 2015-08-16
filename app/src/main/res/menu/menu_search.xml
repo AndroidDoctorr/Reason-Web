@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.elevenfifty.reasonweb.SearchActivity">
+    <item android:id="@+id/profile_menu_item"
+        android:title="@string/profile"
+        android:orderInCategory="1"
+        app:showAsAction="always"/>
+    <item android:id="@+id/prop_menu_item"
+        android:title="@string/prop"
+        android:orderInCategory="2"
+        app:showAsAction="always"/>
+    <item android:id="@+id/logout_menu_item"
+        android:title="@string/logout"
+        android:orderInCategory="3"
+        app:showAsAction="never"/>
+</menu>

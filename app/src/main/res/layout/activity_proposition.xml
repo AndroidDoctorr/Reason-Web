@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:title="@string/main_title"
+        app:subtitleTextAppearance="@color/header"
+        app:titleTextAppearance="@color/header"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    </android.support.v7.widget.Toolbar>
+
+    <!--Conclusion (target Proposition)-->
+    <TextView android:layout_height="200dp"
+        android:layout_width="fill_parent"
+        android:id="@+id/prop_text"
+        android:layout_below="@+id/toolbar"
+        android:text="Socrates is mortal"
+        android:textColor="@color/text_main"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="@drawable/rounded_corners"/>
+
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:id="@+id/reas_text"
+        android:text="If Socrates is a man, then Socrates is mortal, because all men are mortal."
+        android:textColor="@color/text_main"
+        android:layout_below="@+id/prop_text"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:minHeight="40dp"
+        android:background="@drawable/rounded_corners"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/reas_text">
+        <TextView
+            android:id="@+id/premise_1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="All men are mortal (major premise)"
+            android:textColor="@color/text_main"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@drawable/rounded_corners"/>
+        <TextView
+            android:fadingEdge="horizontal"
+            android:id="@+id/premise_2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Socrates is a man (minor premise)"
+            android:textColor="@color/text_main"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@drawable/rounded_corners"/>
+    </LinearLayout>
+
+</RelativeLayout>

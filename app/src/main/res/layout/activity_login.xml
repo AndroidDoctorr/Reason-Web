@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/red"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/main_title"
+        android:textColor="@color/header"
+        android:textSize="32sp"
+        android:padding="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:textAlignment="center"
+        android:paddingBottom="30dp" />
+
+    <EditText
+        android:id="@+id/txtusername"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/Username"
+        android:textColor="@color/header"/>
+
+    <EditText
+        android:id="@+id/txtpassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/Password"
+        android:inputType="textPassword"
+        android:textColor="@color/header"/>
+
+    <EditText
+        android:id="@+id/txtpassword_check"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:visibility="invisible"
+        android:textColor="@color/header"/>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/LoginBtn"
+        android:textColor="@color/text_main"/>
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/SignupBtn"
+        android:textColor="@color/text_main"/>
+
+</LinearLayout>
