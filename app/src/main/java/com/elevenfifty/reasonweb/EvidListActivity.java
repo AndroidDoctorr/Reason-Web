@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.parse.ParseUser;
 
@@ -29,6 +31,16 @@ public class EvidListActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            // finally change the color
+            window.setStatusBarColor(this.getResources().getColor(R.color.orange));
+        }
     }
 
     @Override
@@ -56,11 +68,11 @@ public class EvidListActivity extends ActionBarActivity {
                         Log.d(TAG, "horizontal");
                         if (vx > 0) {
                             Log.d(TAG, "right");
-                            Intent intent = new Intent(EvidListActivity.this, PropositionActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.in_right, R.anim.out_right);
                         } else {
                             Log.d(TAG, "left");
+                            Intent intent = new Intent(EvidListActivity.this, PropositionActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.in_left, R.anim.out_left);
                         }
                     } else {
                         Log.d(TAG, "vertical");
@@ -86,7 +98,7 @@ public class EvidListActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_proposition, menu);
         return true;
     }
 
@@ -98,9 +110,9 @@ public class EvidListActivity extends ActionBarActivity {
             Intent intent = new Intent(EvidListActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == com.elevenfifty.reasonweb.R.id.prop_menu_item) {
-            Intent intent = new Intent(EvidListActivity.this, PropositionActivity.class);
-            startActivityForResult(intent, 1);
+        } else if (id == com.elevenfifty.reasonweb.R.id.profile_menu_item) {
+            Intent intent = new Intent(EvidListActivity.this, ProfileActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {
             ParseUser.logOut();

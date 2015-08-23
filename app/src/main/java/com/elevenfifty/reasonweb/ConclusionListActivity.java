@@ -19,15 +19,15 @@ import com.parse.ParseUser;
  *
  */
 
-public class SyllListActivity extends ActionBarActivity {
-    private String TAG = "Syllogism List";
+public class ConclusionListActivity extends ActionBarActivity {
+    private String TAG = "Evidence List";
     int xi;
     int yi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sylllist);
+        setContentView(R.layout.activity_conclist);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -39,7 +39,7 @@ public class SyllListActivity extends ActionBarActivity {
             // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // finally change the color
-            window.setStatusBarColor(this.getResources().getColor(R.color.blue));
+            window.setStatusBarColor(this.getResources().getColor(R.color.green));
         }
     }
 
@@ -68,9 +68,6 @@ public class SyllListActivity extends ActionBarActivity {
                         Log.d(TAG, "horizontal");
                         if (vx > 0) {
                             Log.d(TAG, "right");
-                            Intent intent = new Intent(SyllListActivity.this, PropositionActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.in_right, R.anim.out_right);
                         } else {
                             Log.d(TAG, "left");
                         }
@@ -80,6 +77,9 @@ public class SyllListActivity extends ActionBarActivity {
                             Log.d(TAG, "down");
                         } else {
                             Log.d(TAG, "up");
+                            Intent intent = new Intent(ConclusionListActivity.this, PropositionActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.in_up, R.anim.out_up);
                         }
                     }
                 }
@@ -107,16 +107,16 @@ public class SyllListActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == com.elevenfifty.reasonweb.R.id.search_menu_item) {
-            Intent intent = new Intent(SyllListActivity.this, SearchActivity.class);
+            Intent intent = new Intent(ConclusionListActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.profile_menu_item) {
-            Intent intent = new Intent(SyllListActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(ConclusionListActivity.this, ProfileActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {
             ParseUser.logOut();
-            Intent intent = new Intent(SyllListActivity.this, LoginActivity.class);
+            Intent intent = new Intent(ConclusionListActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
         }

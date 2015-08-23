@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange">
+    android:background="@color/green">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Evidence"
+        android:text="Conclusions"
         android:textSize="20sp"
         android:textColor="@color/header"
         android:padding="5dp"
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/evid_list"
         android:minHeight="100dp"
-        android:background="@color/light_orange">
+        android:background="@color/light_green">
     </ListView>
 
 </LinearLayout>

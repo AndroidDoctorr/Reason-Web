@@ -56,12 +56,12 @@ public class PropositionActivity extends ActionBarActivity {
                         Log.d(TAG, "horizontal");
                         if (vx > 0) {
                             Log.d(TAG, "right");
-                            Intent intent = new Intent(PropositionActivity.this, SyllListActivity.class);
+                            Intent intent = new Intent(PropositionActivity.this, EvidListActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.in_right, R.anim.out_right);
                         } else {
                             Log.d(TAG, "left");
-                            Intent intent = new Intent(PropositionActivity.this, EvidListActivity.class);
+                            Intent intent = new Intent(PropositionActivity.this, SyllListActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.in_left, R.anim.out_left);
                         }
@@ -69,6 +69,9 @@ public class PropositionActivity extends ActionBarActivity {
                         Log.d(TAG, "vertical");
                         if (vy > 0) {
                             Log.d(TAG, "down");
+                            Intent intent = new Intent(PropositionActivity.this, ConclusionListActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.in_down, R.anim.out_down);
                         } else {
                             Log.d(TAG, "up");
                         }
