@@ -17,15 +17,15 @@ import com.parse.ParseUser;
  *
  */
 
-public class PropositionActivity extends ActionBarActivity {
-    private String TAG = "Proposition Activity";
+public class EvidListActivity extends ActionBarActivity {
+    private String TAG = "Evidence List";
     int xi;
     int yi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_proposition);
+        setContentView(R.layout.activity_evidlist);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,8 +41,8 @@ public class PropositionActivity extends ActionBarActivity {
                 yi = (int) event.getRawY();
                 return true;
             //case (MotionEvent.ACTION_MOVE) :
-                //Log.d(TAG,"Action was MOVE");
-                //return true;
+            //Log.d(TAG,"Action was MOVE");
+            //return true;
             case (MotionEvent.ACTION_UP) :
                 Log.d(TAG,"Action was UP");
                 int xf = (int) event.getX();
@@ -56,14 +56,11 @@ public class PropositionActivity extends ActionBarActivity {
                         Log.d(TAG, "horizontal");
                         if (vx > 0) {
                             Log.d(TAG, "right");
-                            Intent intent = new Intent(PropositionActivity.this, SyllListActivity.class);
+                            Intent intent = new Intent(EvidListActivity.this, PropositionActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.in_right, R.anim.out_right);
                         } else {
                             Log.d(TAG, "left");
-                            Intent intent = new Intent(PropositionActivity.this, EvidListActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.in_left, R.anim.out_left);
                         }
                     } else {
                         Log.d(TAG, "vertical");
@@ -76,12 +73,12 @@ public class PropositionActivity extends ActionBarActivity {
                 }
                 return true;
             //case (MotionEvent.ACTION_CANCEL) :
-                //Log.d(TAG,"Action was CANCEL");
-                //return true;
+            //Log.d(TAG,"Action was CANCEL");
+            //return true;
             //case (MotionEvent.ACTION_OUTSIDE) :
-                //Log.d(TAG,"Movement occurred outside bounds " +
-                //        "of current screen element");
-                //return true;
+            //Log.d(TAG,"Movement occurred outside bounds " +
+            //        "of current screen element");
+            //return true;
             default :
                 return super.onTouchEvent(event);
         }
@@ -89,7 +86,7 @@ public class PropositionActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_proposition, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 
@@ -98,17 +95,16 @@ public class PropositionActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == com.elevenfifty.reasonweb.R.id.search_menu_item) {
-            Intent intent = new Intent(PropositionActivity.this, SearchActivity.class);
-            //intent.putExtra(PROPOSITION, "");
+            Intent intent = new Intent(EvidListActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == com.elevenfifty.reasonweb.R.id.profile_menu_item) {
-            Intent intent = new Intent(PropositionActivity.this, ProfileActivity.class);
+        } else if (id == com.elevenfifty.reasonweb.R.id.prop_menu_item) {
+            Intent intent = new Intent(EvidListActivity.this, PropositionActivity.class);
             startActivityForResult(intent, 1);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {
             ParseUser.logOut();
-            Intent intent = new Intent(PropositionActivity.this, LoginActivity.class);
+            Intent intent = new Intent(EvidListActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
         }

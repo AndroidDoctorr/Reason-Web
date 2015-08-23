@@ -13,6 +13,7 @@ import com.parse.ParseUser;
  * Created by Andrew on 7/28/2015.
  *
  */
+
 public class ProfileActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

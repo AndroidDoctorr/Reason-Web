@@ -10,6 +10,8 @@ import android.view.MenuItem;
 
 import com.parse.ParseUser;
 
+//import android.view.GestureDetector;
+
 /**
  * Created by Andrew on 7/28/2015.
  *
