@@ -2,17 +2,25 @@ package com.elevenfifty.reasonweb;
 
 import android.app.Application;
 
+import com.elevenfifty.reasonweb.Models.Prop;
+import com.elevenfifty.reasonweb.Models.User;
 import com.parse.Parse;
 import com.parse.ParseACL;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 public class ReasonWebApplication extends Application {
+    private static ReasonWebApplication application;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        //ParseObject.registerSubclass(Note.class);
+        application = this;
 
-        Parse.initialize(this, "AFIipchqYqrhlQrBrP0DcaqoRBGI8RTthmS4CK7m", "ZGrUiv0JPP2K0A8ZR1Y3KmNpvZ2huLFXE2arH9q6");
+        ParseUser.registerSubclass(User.class);
+        ParseObject.registerSubclass(Prop.class);
+
+        Parse.initialize(this, "qZMi4h0YpVic4iXcRYq0RuTu3TiNeA0Gg3SkcAuS", "smVZd8YBKoCq8neN1xtaMMWc4dFHHpdauwAfnUyX");
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();

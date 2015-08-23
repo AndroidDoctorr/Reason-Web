@@ -1,6 +1,5 @@
 package com.elevenfifty.reasonweb;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.elevenfifty.reasonweb.Models.User;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -47,22 +47,17 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(com.elevenfifty.reasonweb.R.layout.activity_login);
         ButterKnife.bind(this);
-
         Log.d("LoginActivity: ", "onCreate");
 
-        //usernameTxt = (EditText) findViewById(com.elevenfifty.reasonweb.R.id.txtusername);
-        //passwordTxt = (EditText) findViewById(com.elevenfifty.reasonweb.R.id.txtpassword);
-        //passwordCheckTxt = (EditText) findViewById(com.elevenfifty.reasonweb.R.id.password_check);
-        //loginButton = (Button) findViewById(com.elevenfifty.reasonweb.R.id.login);
-        //signupButton = (Button) findViewById(com.elevenfifty.reasonweb.R.id.signup);
-
-        Window window = this.getWindow();
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        // finally change the color
-        window.setStatusBarColor(this.getResources().getColor(R.color.red));
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            // finally change the color
+            window.setStatusBarColor(this.getResources().getColor(R.color.red));
+        }
     }
 
     @OnClick(R.id.login)
@@ -106,7 +101,7 @@ public class LoginActivity extends Activity {
 
         } else {
             // Save new user data into Parse.com Data Storage
-            ParseUser user = new ParseUser();
+            User user = new User();
             user.setUsername(username);
             user.setPassword(password);
             user.signUpInBackground(new SignUpCallback() {

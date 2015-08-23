@@ -2,7 +2,7 @@
 <resources>
     <color name="header">#FFCCCCCC</color>
     <color name="red">#FF772222</color>
-    <color name="main_color">#FF662266</color>
-    <color name="main_light">#FFFFCCFF</color>
+    <color name="purple">#FF662266</color>
+    <color name="light_purple">#FFFFCCFF</color>
     <color name="text_main">#FF000000</color>
 </resources>
