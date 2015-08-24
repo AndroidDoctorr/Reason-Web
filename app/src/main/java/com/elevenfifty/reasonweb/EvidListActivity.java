@@ -11,8 +11,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.parse.ParseUser;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Andrew on 7/28/2015.
@@ -20,6 +24,9 @@ import com.parse.ParseUser;
  */
 
 public class EvidListActivity extends ActionBarActivity {
+    @Bind(R.id.submit_evid)
+    Button submit_evid;
+
     private String TAG = "Evidence List";
     int xi;
     int yi;
@@ -28,9 +35,12 @@ public class EvidListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evidlist);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //TODO: Add Evidence page to make the list items clickable
 
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
@@ -41,6 +51,7 @@ public class EvidListActivity extends ActionBarActivity {
             // finally change the color
             window.setStatusBarColor(this.getResources().getColor(R.color.orange));
         }
+        submit_evid.setBackgroundResource(R.drawable.rounded_corners);
     }
 
     @Override

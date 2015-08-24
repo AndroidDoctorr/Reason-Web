@@ -11,8 +11,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.parse.ParseUser;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Andrew on 7/28/2015.
@@ -20,6 +24,9 @@ import com.parse.ParseUser;
  */
 
 public class SyllListActivity extends ActionBarActivity {
+    @Bind(R.id.submit_syll)
+    Button submit_syll;
+
     private String TAG = "Syllogism List";
     int xi;
     int yi;
@@ -28,6 +35,7 @@ public class SyllListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sylllist);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,6 +49,8 @@ public class SyllListActivity extends ActionBarActivity {
             // finally change the color
             window.setStatusBarColor(this.getResources().getColor(R.color.blue));
         }
+
+        submit_syll.setBackgroundResource(R.drawable.rounded_corners);
     }
 
     @Override

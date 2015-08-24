@@ -49,6 +49,9 @@ public class LoginActivity extends Activity {
         ButterKnife.bind(this);
         Log.d("LoginActivity: ", "onCreate");
 
+        //TODO: Add First Name and Last Name to signup
+        //TODO: add Avatar Image option
+
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
             // clear FLAG_TRANSLUCENT_STATUS flag:

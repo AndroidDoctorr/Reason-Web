@@ -26,6 +26,12 @@ public class ProfileActivity extends ActionBarActivity {
     Button edit_profile;
     @Bind(R.id.username_text)
     TextView username_text;
+    @Bind(R.id.email_text)
+    TextView email_text;
+    @Bind(R.id.firstname_text)
+    TextView firstname_text;
+    @Bind(R.id.lastname_text)
+    TextView lastname_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,9 @@ public class ProfileActivity extends ActionBarActivity {
         User user = (User) ParseUser.getCurrentUser();
 
         username_text.setText(user.getUsername());
+        email_text.setText(user.getEmail());
+        firstname_text.setText(user.getFirstName());
+        lastname_text.setText(user.getLastName());
     }
 
     @OnClick(R.id.edit_profile)

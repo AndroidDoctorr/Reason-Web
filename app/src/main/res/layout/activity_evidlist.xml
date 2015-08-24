@@ -30,16 +30,19 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/evid_list"
         android:minHeight="100dp"
+        android:layout_margin="10dp"
         android:background="@color/light_orange">
     </ListView>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_margin="10dp"
         android:text="@string/submit_evid"
-        android:layout_gravity="bottom"/>
+        android:id="@+id/submit_evid"
+        android:textSize="14sp" />
 
 </LinearLayout>

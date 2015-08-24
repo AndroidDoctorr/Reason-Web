@@ -18,7 +18,7 @@ import com.parse.ParseUser;
  */
 
 public class PropositionActivity extends ActionBarActivity {
-    private String TAG = "Proposition Activity";
+    private final String TAG = "Proposition Activity";
     int xi;
     int yi;
 
@@ -29,6 +29,9 @@ public class PropositionActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //TODO: Make premises clickable
+        //TODO: Add type and confidence
     }
 
     @Override
