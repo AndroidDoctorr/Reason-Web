@@ -21,16 +21,18 @@ import butterknife.OnClick;
  *
  */
 
-public class ProfileActivity extends ActionBarActivity {
-    @Bind(R.id.edit_profile)
-    Button edit_profile;
+public class EditProfileActivity extends ActionBarActivity {
+    @Bind(R.id.save_profile)
+    Button save_profile;
+    @Bind(R.id.cancel)
+    Button cancel;
     @Bind(R.id.username_text)
     TextView username_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
@@ -41,9 +43,20 @@ public class ProfileActivity extends ActionBarActivity {
         username_text.setText(user.getUsername());
     }
 
-    @OnClick(R.id.edit_profile)
-    public void editProfile() {
-        Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+    @OnClick(R.id.save_profile)
+    public void saveProfile() {
+        //TODO: Save changes to Parse
+
+
+
+
+        Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.cancel)
+    public void cancel() {
+        Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
         startActivity(intent);
     }
 
@@ -58,16 +71,16 @@ public class ProfileActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == com.elevenfifty.reasonweb.R.id.search_menu_item) {
-            Intent intent = new Intent(ProfileActivity.this, SearchActivity.class);
+            Intent intent = new Intent(EditProfileActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.prop_menu_item) {
-            Intent intent = new Intent(ProfileActivity.this, PropositionActivity.class);
+            Intent intent = new Intent(EditProfileActivity.this, PropositionActivity.class);
             startActivityForResult(intent, 1);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {
             ParseUser.logOut();
-            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            Intent intent = new Intent(EditProfileActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
         }

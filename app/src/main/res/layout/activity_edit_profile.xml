@@ -21,18 +21,16 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@id/toolbar">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:layout_width="256dp"
                 android:layout_height="256dp"
                 android:src="@mipmap/leibniz"
                 android:layout_margin="10dp"
                 android:id="@+id/avatar_image"
-                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"/>
 
             <TextView
@@ -47,18 +45,29 @@
                 android:layout_below="@id/avatar_image"
                 android:layout_centerHorizontal="true"/>
 
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:id="@+id/edit_profile"
-                android:text="@string/edit_profile_btn"
-                android:layout_margin="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/username_text"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@+id/username_text"
+                android:weightSum="2">
 
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:id="@+id/save_profile"
+                    android:text="@string/save_profile"
+                    android:layout_margin="10dp" />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:id="@+id/cancel"
+                    android:text="@string/cancel"
+                    android:layout_margin="10dp" />
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-
-
 
 </RelativeLayout>
