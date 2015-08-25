@@ -4,7 +4,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:colorPrimaryDark">#662266</item>
+        <item name="android:colorPrimaryDark">#551155</item>
         <item name="android:buttonStyle">@style/Button</item>
     </style>
 

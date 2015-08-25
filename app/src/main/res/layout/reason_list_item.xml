@@ -5,7 +5,8 @@
     android:layout_height="100dp"
     android:weightSum="2">
 
-    <TextView android:layout_width="match_parent"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1">
     </TextView>
@@ -15,12 +16,14 @@
         android:orientation="horizontal"
         android:id="@+id/premise_layout"
         android:layout_weight="1">
-        <TextView android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:id="@+id/premise_1"
             android:text="@string/P2">
         </TextView>
-        <TextView android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:id="@+id/premise_2"
             android:text="@string/P1">

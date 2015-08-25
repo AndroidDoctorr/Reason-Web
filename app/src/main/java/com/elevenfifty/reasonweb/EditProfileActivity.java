@@ -76,6 +76,7 @@ public class EditProfileActivity extends ActionBarActivity {
             });
         }
 
+
         //TODO: make sure the email address is valid for password resetting purposes
     }
 

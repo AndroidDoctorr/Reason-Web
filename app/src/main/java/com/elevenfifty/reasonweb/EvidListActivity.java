@@ -17,6 +17,7 @@ import com.parse.ParseUser;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Andrew on 7/28/2015.
@@ -49,9 +50,9 @@ public class EvidListActivity extends ActionBarActivity {
             // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // finally change the color
-            window.setStatusBarColor(this.getResources().getColor(R.color.orange));
+            window.setStatusBarColor(this.getResources().getColor(R.color.dark_orange));
         }
-        submit_evid.setBackgroundResource(R.drawable.rounded_corners);
+        submit_evid.setBackgroundResource(R.drawable.rounded_white);
     }
 
     @Override
@@ -105,6 +106,12 @@ public class EvidListActivity extends ActionBarActivity {
             default :
                 return super.onTouchEvent(event);
         }
+    }
+
+    @OnClick(R.id.submit_evid)
+    public void goToSubmiEvid() {
+        Intent intent = new Intent(EvidListActivity.this, EvidenceSubmitActivity.class);
+        startActivity(intent);
     }
 
     @Override

@@ -47,10 +47,10 @@ public class SyllListActivity extends ActionBarActivity {
             // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // finally change the color
-            window.setStatusBarColor(this.getResources().getColor(R.color.blue));
+            window.setStatusBarColor(this.getResources().getColor(R.color.dark_blue));
         }
 
-        submit_syll.setBackgroundResource(R.drawable.rounded_corners);
+        submit_syll.setBackgroundResource(R.drawable.rounded_white);
     }
 
     @Override

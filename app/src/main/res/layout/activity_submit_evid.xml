@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_orange">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:title="@string/main_title"
+        app:subtitleTextAppearance="@color/header"
+        app:titleTextAppearance="@color/header"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit Evidence"
+                android:textSize="20sp"
+                android:textColor="@color/header"
+                android:padding="5dp"
+                android:gravity="center_horizontal"/>
+            <ImageButton
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:scaleType="fitXY"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="add_image_button"
+                android:src="@drawable/evidence_placeholder_image1"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:id="@+id/title_edit"
+                android:hint="Title"
+                android:background="@drawable/rounded_orange"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/description_edit"
+                android:hint="Description"
+                android:textColor="@color/text_main"
+                android:background="@drawable/rounded_orange"
+                android:padding="3dp"
+                android:gravity="top"
+                android:textSize="16sp"
+                android:layout_margin="5dp"
+                android:minHeight="200dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/links_edit"
+                android:hint="Links"
+                android:textColor="@color/blue"
+                android:background="@drawable/rounded_orange"
+                android:padding="3dp"
+                android:textSize="16sp"
+                android:layout_margin="5dp"
+                android:minHeight="100dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:text="@string/submit_evid"
+                android:id="@+id/submit_evid"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
