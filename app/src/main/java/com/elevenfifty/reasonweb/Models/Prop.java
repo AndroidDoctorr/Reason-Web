@@ -1,14 +1,7 @@
 package com.elevenfifty.reasonweb.Models;
 
-import android.util.Log;
-
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
 
 /**
  * Created by Andrew on 8/22/2015.
@@ -17,12 +10,10 @@ import java.util.ArrayList;
 @ParseClassName("Prop")
 public class Prop extends ParseObject {
     private String prop;
-    private String topP1;
-    private String topP2;
-    private String topReason;
-    private ArrayList<Syll> reasons;
-    private ArrayList<Evid> evidence;
-    private ArrayList<Syll> conclusions;
+    //private ArrayList<Syll> reasons; - query for Syllogisms with this as the conclusion instead.
+    //private ArrayList<Evid> evidence; - query for Evid with supports() instead?
+    //OR query propositions on the evidence page??
+    //private ArrayList<Syll> conclusions; - query for
 
     public String getProp() {
         return getString("prop");
@@ -32,31 +23,7 @@ public class Prop extends ParseObject {
         put("prop",prop);
     }
 
-    public String getTopP1() {
-        return getString("topP1");
-    }
-
-    public void setTopP1(String topP1) {
-        put("topP1",topP1);
-    }
-
-    public String getTopP2() {
-        return getString("topP2");
-    }
-
-    public void setTopP2(String topP2) {
-        put("topP2",topP2);
-    }
-
-    public String getTopReason() {
-        return getString("");
-    }
-
-    public void setTopReason(String topReason) {
-        put("topReason",topReason);
-    }
-
-    public ArrayList<Syll> getReasons() {
+    /*public ArrayList<Syll> getReasons() {
         JSONArray reasonsJSON =  getJSONArray("reasons");
         reasons.clear();
         for (int i=0; i<reasonsJSON.length(); i++) {
@@ -117,5 +84,5 @@ public class Prop extends ParseObject {
             conclusionsJSON.put(conclusions.get(i));
         }
         put("conclusions",conclusionsJSON);
-    }
+    }*/
 }

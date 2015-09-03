@@ -7,19 +7,23 @@
 
     <color name="dark_purple">#FF551155</color>
     <color name="purple">#FF882288</color>
-    <color name="light_purple">#FFAA88AA</color>
+    <color name="light_purple">#FFFFDDFF</color>
 
     <color name="dark_green">#FF004422</color>
     <color name="green">#FF226644</color>
-    <color name="light_green">#FFAAFF66</color>
+    <color name="light_green">#FFDDFFBB</color>
 
 
     <color name="dark_orange">#FF662200</color>
     <color name="orange">#FFEE5500</color>
-    <color name="light_orange">#FFFFAA66</color>
+    <color name="light_orange">#FFFFDDBB</color>
 
     <color name="dark_blue">#FF002244</color>
     <color name="blue">#FF004466</color>
-    <color name="light_blue">#FF6699AA</color>
+    <color name="light_blue">#FFBBDDFF</color>
+
+    <color name="term">#FF882288</color>
+    <color name="url">#FF222299</color>
+    <color name="mention">#FFFFFFFF</color>
 
 </resources>

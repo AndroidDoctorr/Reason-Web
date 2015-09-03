@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -23,6 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Evidence"
+        android:id="@+id/title"
+        android:layout_below="@id/toolbar"
         android:textSize="20sp"
         android:textColor="@color/header"
         android:padding="5dp"
@@ -32,6 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/evid_list"
+        android:layout_below="@+id/title"
+        android:layout_above="@+id/submit_evid"
         android:minHeight="100dp"
         android:layout_margin="10dp"
         android:padding="5dp"
@@ -44,6 +48,8 @@
         android:layout_margin="10dp"
         android:text="@string/submit_evid"
         android:id="@+id/submit_evid"
-        android:textSize="14sp" />
+        android:layout_alignParentBottom="true"
+        android:textSize="14sp"
+        android:background="@drawable/rounded_white"/>
 
-</LinearLayout>
+</RelativeLayout>

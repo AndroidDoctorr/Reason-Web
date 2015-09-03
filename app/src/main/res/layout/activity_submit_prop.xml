@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_purple">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:title="@string/main_title"
+        app:subtitleTextAppearance="@color/header"
+        app:titleTextAppearance="@color/header"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit New Proposition:"
+        android:id="@+id/title"
+        android:textSize="18sp"
+        android:textColor="@color/header"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:id="@+id/q1_seekbar"
+        android:layout_margin="10dp"
+        android:max="100"
+        android:progress="50"/>
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/qualifier_1"
+        android:text="Some"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_purple"
+        android:layout_below="@+id/q1_seekbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <SearchView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Term 1"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_purple"
+        android:layout_below="@+id/q1_seekbar"
+        android:layout_toRightOf="@+id/qualifier_1"
+        android:layout_toEndOf="@+id/qualifier_1"
+        android:id="@+id/term1_search"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/qualifier_1"
+        android:id="@+id/q2_seekbar"
+        android:layout_margin="10dp"
+        android:max="100"
+        android:progress="50"/>
+
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/verb"
+        android:text="Are"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_purple"
+        android:layout_below="@+id/q2_seekbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/qualifier_2"
+        android:text="Occasionally"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_purple"
+        android:layout_below="@+id/q2_seekbar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <SearchView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Term 2"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_purple"
+        android:layout_below="@+id/verb"
+        android:layout_toRightOf="@+id/verb"
+        android:layout_toEndOf="@+id/verb"
+        android:id="@+id/term2_search"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_term"
+        android:text="+ New Term"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_purple"
+        android:layout_below="@+id/term2_search"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <!--<RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_purple"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+        android:weightSum="2">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="General"
+            android:layout_weight="1"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Particular"
+            android:layout_weight="1"/>
+    </RadioGroup>-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:text="@string/submit_prop"
+        android:id="@+id/submit_prop"
+        android:background="@drawable/rounded_white"
+        android:layout_alignParentBottom="true"
+        android:textSize="14sp" />
+
+</RelativeLayout>

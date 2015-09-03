@@ -16,9 +16,10 @@
         app:titleTextAppearance="@color/header"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
     </android.support.v7.widget.Toolbar>
 
-    <!--Conclusion (target Proposition)-->
+    <!--Conclusion Psoposition-->
     <TextView android:layout_height="200dp"
         android:layout_width="fill_parent"
         android:id="@+id/prop_text"
@@ -31,38 +32,32 @@
         android:padding="10dp"
         android:gravity="center"
         android:background="@drawable/rounded_purple"/>
-
-    <TextView android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:id="@+id/reas_text"
-        android:text="If Socrates is a man, then Socrates is mortal, because all men are mortal."
-        android:textColor="@color/text_main"
-        android:layout_below="@+id/prop_text"
-        android:layout_margin="5dp"
-        android:padding="10dp"
-        android:minHeight="40dp"
-        android:background="@drawable/rounded_purple"/>
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_below="@+id/reas_text">
+        android:id="@+id/propositions"
+        android:layout_below="@+id/prop_text"
+        android:layout_above="@id/submit_prop">
+        <!--Premise 1-->
         <TextView
             android:id="@+id/premise_1"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
+            android:gravity="center"
             android:text="All men are mortal (major premise)"
             android:textColor="@color/text_main"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:padding="10dp"
             android:background="@drawable/rounded_purple"/>
+        <!--Premise 2-->
         <TextView
-            android:fadingEdge="horizontal"
             android:id="@+id/premise_2"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
+            android:gravity="center"
             android:text="Socrates is a man (minor premise)"
             android:textColor="@color/text_main"
             android:layout_margin="5dp"
@@ -70,5 +65,15 @@
             android:padding="10dp"
             android:background="@drawable/rounded_purple"/>
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:text="@string/submit_syll"
+        android:id="@+id/submit_syll"
+        android:layout_alignParentBottom="true"
+        android:textSize="14sp"
+        android:background="@drawable/rounded_white"/>
 
 </RelativeLayout>

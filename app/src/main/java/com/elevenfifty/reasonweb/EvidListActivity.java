@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.parse.ParseUser;
 
@@ -27,6 +28,8 @@ import butterknife.OnClick;
 public class EvidListActivity extends ActionBarActivity {
     @Bind(R.id.submit_evid)
     Button submit_evid;
+    @Bind(R.id.evid_list)
+    ListView evid_list;
 
     private String TAG = "Evidence List";
     int xi;
@@ -35,7 +38,7 @@ public class EvidListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_evidlist);
+        setContentView(R.layout.activity_list_evid);
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
@@ -51,8 +54,9 @@ public class EvidListActivity extends ActionBarActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // finally change the color
             window.setStatusBarColor(this.getResources().getColor(R.color.dark_orange));
+
+            evid_list.setFocusable(false);
         }
-        submit_evid.setBackgroundResource(R.drawable.rounded_white);
     }
 
     @Override

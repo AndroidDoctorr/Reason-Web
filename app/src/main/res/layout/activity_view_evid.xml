@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ReilativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -26,24 +26,16 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Submit New Evidence:"
-                android:textSize="20sp"
-                android:textColor="@color/header"
-                android:padding="5dp"
-                android:gravity="center_horizontal"/>
-            <ImageButton
+            <ImageView
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/evidence_image"
-                android:contentDescription="add_image_button"
+                android:contentDescription="evidence image"
                 android:layout_margin="10dp"/>
 
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:id="@+id/evid_title"
@@ -52,7 +44,7 @@
                 android:textSize="16sp"
                 android:padding="5dp"
                 android:layout_margin="5dp"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/evid_description"
@@ -64,7 +56,7 @@
                 android:textSize="16sp"
                 android:layout_margin="5dp"
                 android:minHeight="200dp"/>
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/evid_links"
@@ -77,15 +69,6 @@
                 android:textSize="16sp"
                 android:layout_margin="5dp"
                 android:minHeight="100dp"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                android:text="@string/submit_evid"
-                android:id="@+id/submit_evid"
-                android:background="@drawable/rounded_white"
-                android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</ReilativeLayout>

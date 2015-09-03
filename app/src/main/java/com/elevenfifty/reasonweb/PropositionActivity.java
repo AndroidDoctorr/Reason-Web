@@ -9,8 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.Button;
 
 import com.parse.ParseUser;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Andrew on 7/28/2015.
@@ -18,6 +23,9 @@ import com.parse.ParseUser;
  */
 
 public class PropositionActivity extends ActionBarActivity {
+    @Bind(R.id.submit_prop)
+    Button submit_prop;
+
     private final String TAG = "Proposition Activity";
     int xi;
     int yi;
@@ -25,7 +33,8 @@ public class PropositionActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_proposition);
+        setContentView(R.layout.activity_view_prop);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,9 +52,6 @@ public class PropositionActivity extends ActionBarActivity {
                 xi = (int) event.getRawX();
                 yi = (int) event.getRawY();
                 return true;
-            //case (MotionEvent.ACTION_MOVE) :
-                //Log.d(TAG,"Action was MOVE");
-                //return true;
             case (MotionEvent.ACTION_UP) :
                 Log.d(TAG,"Action was UP");
                 int xf = (int) event.getX();
@@ -91,6 +97,12 @@ public class PropositionActivity extends ActionBarActivity {
             default :
                 return super.onTouchEvent(event);
         }
+    }
+
+    @OnClick(R.id.submit_prop)
+    public void submitProp() {
+        Intent intent = new Intent(PropositionActivity.this, PropositionSubmitActivity.class);
+        startActivity(intent);
     }
 
     @Override

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_orange">
 
     <ImageView
         android:layout_width="80dp"
@@ -11,11 +12,34 @@
         android:layout_marginBottom="5dp"
         android:id="@+id/evid_image" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:id="@+id/evid_text"
-        android:textSize="18sp" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:id="@+id/evid_title"
+            android:text="Title"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_orange" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:id="@+id/evid_description"
+            android:text="Description"
+            android:textSize="18sp"
+            android:background="@drawable/rounded_orange" />
+    </LinearLayout>
 </LinearLayout>

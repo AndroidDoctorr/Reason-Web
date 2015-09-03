@@ -13,9 +13,16 @@
     <string name="profile">Profile</string>
     <string name="prop">Prop</string>
     <string name="logout">Logout</string>
-    <string name="submit_syll">Submit Syllogism</string>
-    <string name="submit_evid">Submit Evidence</string>
+    <string name="submit_syll">Submit New Syllogism</string>
+    <string name="submit_evid">Submit New Evidence</string>
     <string name="edit_profile_btn">Edit Profile</string>
     <string name="save_profile">Save Changes</string>
     <string name="cancel">Cancel</string>
+    <string name="submit_prop">Submit New Proposition</string>
+
+    <string-array name="type_array">
+        <item>Noun</item>
+        <item>Verb</item>
+        <item>Adjective</item>
+    </string-array>
 </resources>
