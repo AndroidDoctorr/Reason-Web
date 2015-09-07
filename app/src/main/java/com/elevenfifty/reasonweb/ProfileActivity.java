@@ -52,7 +52,7 @@ public class ProfileActivity extends ActionBarActivity {
 
     @OnClick(R.id.edit_profile)
     public void editProfile() {
-        Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+        Intent intent = new Intent(ProfileActivity.this, ProfileEditActivity.class);
         startActivity(intent);
     }
 
@@ -71,7 +71,7 @@ public class ProfileActivity extends ActionBarActivity {
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.prop_menu_item) {
-            Intent intent = new Intent(ProfileActivity.this, PropositionActivity.class);
+            Intent intent = new Intent(ProfileActivity.this, ViewPropActivity.class);
             startActivityForResult(intent, 1);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {

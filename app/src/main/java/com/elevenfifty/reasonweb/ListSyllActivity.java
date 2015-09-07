@@ -9,38 +9,48 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.parse.ParseUser;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Andrew on 7/28/2015.
  *
  */
 
-public class PropositionActivity extends ActionBarActivity {
-    @Bind(R.id.submit_prop)
-    Button submit_prop;
+public class ListSyllActivity extends ActionBarActivity {
+    @Bind(R.id.submit_syll)
+    Button submit_syll;
 
-    private final String TAG = "Proposition Activity";
+    private String TAG = "Syllogism List";
     int xi;
     int yi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_prop);
+        setContentView(R.layout.activity_list_syll);
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //TODO: Make premises clickable
-        //TODO: Add type and confidence
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            // clear FLAG_TRANSLUCENT_STATUS flag:
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            // finally change the color
+            window.setStatusBarColor(this.getResources().getColor(R.color.dark_blue));
+        }
+
+        submit_syll.setBackgroundResource(R.drawable.rounded_white);
     }
 
     @Override
@@ -52,6 +62,9 @@ public class PropositionActivity extends ActionBarActivity {
                 xi = (int) event.getRawX();
                 yi = (int) event.getRawY();
                 return true;
+            //case (MotionEvent.ACTION_MOVE) :
+            //Log.d(TAG,"Action was MOVE");
+            //return true;
             case (MotionEvent.ACTION_UP) :
                 Log.d(TAG,"Action was UP");
                 int xf = (int) event.getX();
@@ -65,22 +78,16 @@ public class PropositionActivity extends ActionBarActivity {
                         Log.d(TAG, "horizontal");
                         if (vx > 0) {
                             Log.d(TAG, "right");
-                            Intent intent = new Intent(PropositionActivity.this, EvidListActivity.class);
+                            Intent intent = new Intent(ListSyllActivity.this, ViewPropActivity.class);
                             startActivity(intent);
                             overridePendingTransition(R.anim.in_right, R.anim.out_right);
                         } else {
                             Log.d(TAG, "left");
-                            Intent intent = new Intent(PropositionActivity.this, SyllListActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.in_left, R.anim.out_left);
                         }
                     } else {
                         Log.d(TAG, "vertical");
                         if (vy > 0) {
                             Log.d(TAG, "down");
-                            Intent intent = new Intent(PropositionActivity.this, ConclusionListActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.in_down, R.anim.out_down);
                         } else {
                             Log.d(TAG, "up");
                         }
@@ -88,21 +95,15 @@ public class PropositionActivity extends ActionBarActivity {
                 }
                 return true;
             //case (MotionEvent.ACTION_CANCEL) :
-                //Log.d(TAG,"Action was CANCEL");
-                //return true;
+            //Log.d(TAG,"Action was CANCEL");
+            //return true;
             //case (MotionEvent.ACTION_OUTSIDE) :
-                //Log.d(TAG,"Movement occurred outside bounds " +
-                //        "of current screen element");
-                //return true;
+            //Log.d(TAG,"Movement occurred outside bounds " +
+            //        "of current screen element");
+            //return true;
             default :
                 return super.onTouchEvent(event);
         }
-    }
-
-    @OnClick(R.id.submit_prop)
-    public void submitProp() {
-        Intent intent = new Intent(PropositionActivity.this, PropositionSubmitActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -116,17 +117,16 @@ public class PropositionActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == com.elevenfifty.reasonweb.R.id.search_menu_item) {
-            Intent intent = new Intent(PropositionActivity.this, SearchActivity.class);
-            //intent.putExtra(PROPOSITION, "");
+            Intent intent = new Intent(ListSyllActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.profile_menu_item) {
-            Intent intent = new Intent(PropositionActivity.this, ProfileActivity.class);
-            startActivityForResult(intent, 1);
+            Intent intent = new Intent(ListSyllActivity.this, ProfileActivity.class);
+            startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {
             ParseUser.logOut();
-            Intent intent = new Intent(PropositionActivity.this, LoginActivity.class);
+            Intent intent = new Intent(ListSyllActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
         }

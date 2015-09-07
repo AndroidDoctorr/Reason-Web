@@ -29,7 +29,7 @@ import butterknife.OnClick;
  *
  */
 
-public class EditProfileActivity extends ActionBarActivity {
+public class ProfileEditActivity extends ActionBarActivity {
     @Bind(R.id.avatar_image)
     ParseImageView avatar_image;
 
@@ -107,7 +107,7 @@ public class EditProfileActivity extends ActionBarActivity {
             public void done(ParseException e) {
                 Toast.makeText(getApplicationContext(), "Changes Saved", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                Intent intent = new Intent(ProfileEditActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -115,7 +115,7 @@ public class EditProfileActivity extends ActionBarActivity {
 
     @OnClick(R.id.cancel)
     public void cancel() {
-        Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+        Intent intent = new Intent(ProfileEditActivity.this, ProfileActivity.class);
         startActivity(intent);
     }
 
@@ -130,16 +130,16 @@ public class EditProfileActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == com.elevenfifty.reasonweb.R.id.search_menu_item) {
-            Intent intent = new Intent(EditProfileActivity.this, SearchActivity.class);
+            Intent intent = new Intent(ProfileEditActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.prop_menu_item) {
-            Intent intent = new Intent(EditProfileActivity.this, PropositionActivity.class);
+            Intent intent = new Intent(ProfileEditActivity.this, ViewPropActivity.class);
             startActivityForResult(intent, 1);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {
             ParseUser.logOut();
-            Intent intent = new Intent(EditProfileActivity.this, LoginActivity.class);
+            Intent intent = new Intent(ProfileEditActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
         }

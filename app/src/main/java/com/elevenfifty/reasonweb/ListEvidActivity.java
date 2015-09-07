@@ -12,33 +12,39 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.parse.ParseUser;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Andrew on 7/28/2015.
  *
  */
 
-public class SyllListActivity extends ActionBarActivity {
-    @Bind(R.id.submit_syll)
-    Button submit_syll;
+public class ListEvidActivity extends ActionBarActivity {
+    @Bind(R.id.submit_evid)
+    Button submit_evid;
+    @Bind(R.id.evid_list)
+    ListView evid_list;
 
-    private String TAG = "Syllogism List";
+    private String TAG = "Evidence List";
     int xi;
     int yi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_syll);
+        setContentView(R.layout.activity_list_evid);
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //TODO: Add Evidence page to make the list items clickable
 
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
@@ -47,10 +53,10 @@ public class SyllListActivity extends ActionBarActivity {
             // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // finally change the color
-            window.setStatusBarColor(this.getResources().getColor(R.color.dark_blue));
-        }
+            window.setStatusBarColor(this.getResources().getColor(R.color.dark_orange));
 
-        submit_syll.setBackgroundResource(R.drawable.rounded_white);
+            evid_list.setFocusable(false);
+        }
     }
 
     @Override
@@ -78,11 +84,11 @@ public class SyllListActivity extends ActionBarActivity {
                         Log.d(TAG, "horizontal");
                         if (vx > 0) {
                             Log.d(TAG, "right");
-                            Intent intent = new Intent(SyllListActivity.this, PropositionActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.in_right, R.anim.out_right);
                         } else {
                             Log.d(TAG, "left");
+                            Intent intent = new Intent(ListEvidActivity.this, ViewPropActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.in_left, R.anim.out_left);
                         }
                     } else {
                         Log.d(TAG, "vertical");
@@ -106,6 +112,12 @@ public class SyllListActivity extends ActionBarActivity {
         }
     }
 
+    @OnClick(R.id.submit_evid)
+    public void goToSubmiEvid() {
+        Intent intent = new Intent(ListEvidActivity.this, SubmitEvidActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_proposition, menu);
@@ -117,16 +129,16 @@ public class SyllListActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == com.elevenfifty.reasonweb.R.id.search_menu_item) {
-            Intent intent = new Intent(SyllListActivity.this, SearchActivity.class);
+            Intent intent = new Intent(ListEvidActivity.this, SearchActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.profile_menu_item) {
-            Intent intent = new Intent(SyllListActivity.this, ProfileActivity.class);
+            Intent intent = new Intent(ListEvidActivity.this, ProfileActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.logout_menu_item) {
             ParseUser.logOut();
-            Intent intent = new Intent(SyllListActivity.this, LoginActivity.class);
+            Intent intent = new Intent(ListEvidActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
         }

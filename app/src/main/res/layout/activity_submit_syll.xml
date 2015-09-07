@@ -28,4 +28,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:text="@string/submit_syll"
+        android:id="@+id/submit_syll"
+        android:background="@drawable/rounded_white"
+        android:layout_alignParentBottom="true"
+        android:textSize="14sp" />
+
 </RelativeLayout>

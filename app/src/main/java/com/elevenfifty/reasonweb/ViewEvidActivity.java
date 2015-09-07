@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  *
  */
 
-public class EvidenceActivity extends ActionBarActivity {
+public class ViewEvidActivity extends ActionBarActivity {
     @Bind(R.id.submit_evid)
     Button submit_evid;
     @Bind(R.id.evidence_image)
@@ -41,6 +41,8 @@ public class EvidenceActivity extends ActionBarActivity {
     TextView evid_links;
 
     private String TAG = "Evidence Submit";
+
+    //TODO: Add a Suggest Edit submission button
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

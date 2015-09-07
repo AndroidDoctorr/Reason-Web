@@ -16,7 +16,7 @@ import com.parse.ParseUser;
  *
  */
 
-public class MainActivity extends Activity {
+public class DispatchActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -31,17 +31,17 @@ public class MainActivity extends Activity {
         Globals.dpWidth  = outMetrics.widthPixels / density;
 
         if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(DispatchActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         } else {
             ParseUser currentUser = ParseUser.getCurrentUser();
             if (currentUser != null) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Intent intent = new Intent(DispatchActivity.this, SearchActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(DispatchActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

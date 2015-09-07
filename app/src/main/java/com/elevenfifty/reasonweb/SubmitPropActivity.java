@@ -25,7 +25,7 @@ import butterknife.OnClick;
  *
  */
 
-public class PropositionSubmitActivity extends ActionBarActivity {
+public class SubmitPropActivity extends ActionBarActivity {
     @Bind(R.id.q1_seekbar)
     SeekBar q1_seekbar;
     @Bind(R.id.q2_seekbar)
@@ -140,13 +140,13 @@ public class PropositionSubmitActivity extends ActionBarActivity {
 
     @OnClick(R.id.new_term)
     public void newTerm() {
-        Intent intent = new Intent(PropositionSubmitActivity.this, TermSubmitActivity.class);
+        Intent intent = new Intent(SubmitPropActivity.this, SubmitTermActivity.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.submit_prop)
     public void testnav() {
-        Intent intent = new Intent(PropositionSubmitActivity.this, TermSubmitActivity.class);
+        Intent intent = new Intent(SubmitPropActivity.this, SubmitTermActivity.class);
         startActivity(intent);
     }
 }

@@ -23,6 +23,7 @@ public class Evid extends ParseObject {
     private String text;
     private ArrayList<Prop> supports;
     private ParseFile imageFile;
+    private ParseFile thumbFile;
     private ArrayList<String> links;
     private Double cert;
     private Integer votes;
@@ -71,6 +72,14 @@ public class Evid extends ParseObject {
 
     public void setImageFile(ParseFile imageFile) {
         put("imageFile",imageFile);
+    }
+
+    public ParseFile getThumbFile() {
+        return getParseFile("thumbFile");
+    }
+
+    public void setThumbFile(ParseFile thumbFile) {
+        put("thumbFile",thumbFile);
     }
 
     public ArrayList<String> getLinks() {

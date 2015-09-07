@@ -59,7 +59,7 @@ public class LoginActivity extends Activity {
             // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // finally change the color
-            window.setStatusBarColor(this.getResources().getColor(R.color.red));
+            window.setStatusBarColor(this.getResources().getColor(R.color.dark_red));
         }
     }
 

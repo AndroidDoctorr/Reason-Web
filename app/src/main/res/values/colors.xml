@@ -3,7 +3,9 @@
     <color name="header">#FFCCCCCC</color>
     <color name="text_main">#FF000000</color>
 
-    <color name="red">#FF772222</color>
+    <color name="dark_red">#FF551111</color>
+    <color name="red">#FF882222</color>
+    <color name="light_red">#FFFFDDDD</color>
 
     <color name="dark_purple">#FF551155</color>
     <color name="purple">#FF882288</color>
@@ -25,5 +27,7 @@
     <color name="term">#FF882288</color>
     <color name="url">#FF222299</color>
     <color name="mention">#FFFFFFFF</color>
+
+    <color name="transparent">#00000000</color>
 
 </resources>

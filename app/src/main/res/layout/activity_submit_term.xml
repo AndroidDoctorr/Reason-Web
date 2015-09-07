@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_purple">
+    android:background="@color/dark_green">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -31,7 +31,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/termtext"
+        android:id="@+id/term_text"
         android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
@@ -46,12 +46,13 @@
         android:id="@+id/type_layout"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:layout_below="@id/termtext">
+        android:layout_below="@id/term_text">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:layout_margin="10dp"
+            android:id="@+id/type_text"
             android:text="Type:"
             android:textColor="@color/header"
             android:layout_gravity="center_vertical"/>
@@ -61,7 +62,7 @@
             android:layout_margin="10dp"
             android:id="@+id/type_spinner"
             android:entries="@array/type_array"
-            android:background="@drawable/rounded_purple"/>
+            android:background="@drawable/rounded_green"/>
     </LinearLayout>
 
     <LinearLayout
@@ -80,7 +81,7 @@
             android:orientation="vertical"
             android:id="@+id/general_particular"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/rounded_purple"
+            android:background="@drawable/rounded_green"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
@@ -104,7 +105,7 @@
             android:gravity="start"
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/rounded_purple"
+            android:background="@drawable/rounded_green"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
@@ -139,7 +140,7 @@
             android:orientation="vertical"
             android:id="@+id/tense"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/rounded_purple"
+            android:background="@drawable/rounded_green"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
@@ -161,41 +162,35 @@
                 android:text="Future" />
         </RadioGroup>
 
-        <LinearLayout android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-            <RadioGroup
-                android:layout_width="0dp"
-                android:layout_weight="1"
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="vertical"
+            android:id="@+id/sing_plur"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/rounded_green"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+            <RadioButton
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="vertical"
-                android:id="@+id/sing_plur"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/rounded_purple"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/active_radio"
-                    android:text="Active" />
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/passive_radio"
-                    android:text="Passive" />
-            </RadioGroup>
-
+                android:id="@+id/passive_radio"
+                android:text="Passive" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/intransitive_radio"
+                android:text="Intransitive" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/transitive_radio"
-                android:text="Transitive"
-                android:background="@drawable/rounded_purple"/>
-        </LinearLayout>
-
+                android:text="Transitive" />
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout
@@ -215,7 +210,7 @@
             android:orientation="vertical"
             android:id="@+id/something_something"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/rounded_purple"
+            android:background="@drawable/rounded_green"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
@@ -223,13 +218,18 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/something_radio"
-                android:text="Something" />
+                android:id="@+id/normal_radio"
+                android:text="Normal" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/somethingelse_radio"
-                android:text="Something Else" />
+                android:id="@+id/comparative_radio"
+                android:text="Comparative" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/superlative_radio"
+                android:text="Superlative" />
         </RadioGroup>
 
         <RadioGroup
@@ -239,7 +239,7 @@
             android:gravity="start"
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/rounded_purple"
+            android:background="@drawable/rounded_green"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
@@ -247,13 +247,18 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/what_radio"
-                android:text="Uhhh" />
+                android:id="@+id/qualitative_radio"
+                android:text="Qualitative" />
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dunno_radio"
-                android:text="Ummmm" />
+                android:id="@+id/intensive_radio"
+                android:text="Intensive" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/extensive_radio"
+                android:text="Extensive" />
         </RadioGroup>
     </LinearLayout>
 
@@ -261,8 +266,8 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_purple"
-        android:id="@+id/definition"
+        android:background="@drawable/rounded_green"
+        android:id="@+id/definition_text"
         android:hint="Definition"
         android:layout_above="@+id/submit_term"
         android:textAlignment="viewStart"
@@ -272,7 +277,7 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="Submit Term"
         android:background="@drawable/rounded_white"
         android:id="@+id/submit_term"

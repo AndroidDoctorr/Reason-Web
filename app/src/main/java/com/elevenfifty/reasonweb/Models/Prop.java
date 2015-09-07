@@ -3,6 +3,8 @@ package com.elevenfifty.reasonweb.Models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import org.json.JSONArray;
+
 /**
  * Created by Andrew on 8/22/2015.
  *
@@ -10,10 +12,10 @@ import com.parse.ParseObject;
 @ParseClassName("Prop")
 public class Prop extends ParseObject {
     private String prop;
-    //private ArrayList<Syll> reasons; - query for Syllogisms with this as the conclusion instead.
-    //private ArrayList<Evid> evidence; - query for Evid with supports() instead?
-    //OR query propositions on the evidence page??
-    //private ArrayList<Syll> conclusions; - query for
+    private String subject;
+    private String predicate;
+    private String propType;
+    private JSONArray terms;  //???? Do I want to have pointers for anything else?
 
     public String getProp() {
         return getString("prop");
@@ -21,6 +23,38 @@ public class Prop extends ParseObject {
 
     public void setProp(String prop) {
         put("prop",prop);
+    }
+
+    public String getSubject() {
+        return getString("subject");
+    }
+
+    public void setSubject(String subject) {
+        put("subject", subject);
+    }
+
+    public String getPredicate() {
+        return getString("predicate");
+    }
+
+    public void setPredicate(String predicate) {
+        put("predicate",predicate);
+    }
+
+    public JSONArray getTerms() {
+        return getJSONArray("terms");
+    }
+
+    public void setTerms(JSONArray terms) {
+        put("terms",terms);
+    }
+
+    public String getPropType() {
+        return getString("propType");
+    }
+
+    public void setPropType(String propType) {
+        put("propType", propType);
     }
 
     /*public ArrayList<Syll> getReasons() {

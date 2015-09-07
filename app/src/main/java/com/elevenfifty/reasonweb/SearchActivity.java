@@ -43,7 +43,7 @@ public class SearchActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == com.elevenfifty.reasonweb.R.id.prop_menu_item) {
-            Intent intent = new Intent(SearchActivity.this, PropositionActivity.class);
+            Intent intent = new Intent(SearchActivity.this, ViewPropActivity.class);
             startActivity(intent);
             return true;
         } else if (id == com.elevenfifty.reasonweb.R.id.profile_menu_item) {

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:background="@color/dark_green">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirm_term_title"
+        android:text="Confirm New Term"
+        android:textSize="16sp"
+        android:textColor="@color/header"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:minWidth="100dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/confirm_term_text"
+        android:text="Term"
+        android:background="@drawable/rounded_green"
+        android:layout_below="@+id/confirm_term_title"
+        android:padding="5dp"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/confirm_term_type"
+        android:background="@drawable/rounded_green"
+        android:layout_below="@+id/confirm_term_text"
+        android:padding="5dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/confirm_definition_text"
+        android:background="@drawable/rounded_green"
+        android:layout_below="@+id/confirm_term_type"
+        android:layout_above="@+id/button_layout"
+        android:padding="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2"
+        android:layout_margin="5dp"
+        android:id="@+id/button_layout">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Back to Edit"
+            android:id="@+id/back_button"
+            android:background="@drawable/rounded_white"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Submit New Term"
+            android:id="@+id/new_term_button"
+            android:background="@drawable/rounded_white"/>
+    </LinearLayout>
+
+</RelativeLayout>
