@@ -5,6 +5,7 @@ import android.app.Application;
 import com.elevenfifty.reasonweb.Models.Evid;
 import com.elevenfifty.reasonweb.Models.Prop;
 import com.elevenfifty.reasonweb.Models.Syll;
+import com.elevenfifty.reasonweb.Models.Term;
 import com.elevenfifty.reasonweb.Models.User;
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -28,6 +29,7 @@ public class ReasonWebApplication extends Application {
         application = this;
 
         ParseUser.registerSubclass(User.class);
+        ParseObject.registerSubclass(Term.class);
         ParseObject.registerSubclass(Prop.class);
         ParseObject.registerSubclass(Evid.class);
         ParseObject.registerSubclass(Syll.class);

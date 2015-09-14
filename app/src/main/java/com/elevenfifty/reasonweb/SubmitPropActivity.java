@@ -1,5 +1,7 @@
 package com.elevenfifty.reasonweb;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -9,12 +11,31 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elevenfifty.reasonweb.Components.Globals;
+import com.elevenfifty.reasonweb.Models.Prop;
+import com.elevenfifty.reasonweb.Models.Term;
+import com.elevenfifty.reasonweb.Utils.TermSearchAdapter;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,24 +52,95 @@ public class SubmitPropActivity extends ActionBarActivity {
     @Bind(R.id.q2_seekbar)
     SeekBar q2_seekbar;
 
-    @Bind(R.id.verb)
-    TextView verb;
+    @Bind(R.id.verb_s)
+    Spinner verb_s;
+    @Bind(R.id.verb_p)
+    Spinner verb_p;
+    @Bind(R.id.helpers_1_s)
+    Spinner helpers_1_s;
+    @Bind(R.id.helpers_1_p)
+    Spinner helpers_1_p;
+    @Bind(R.id.helpers_2_s)
+    Spinner helpers_2_s;
+    @Bind(R.id.helpers_2_p)
+    Spinner helpers_2_p;
+
     @Bind(R.id.qualifier_1)
     TextView qualifier_1;
     @Bind(R.id.qualifier_2)
     TextView qualifier_2;
 
-    @Bind(R.id.term1_search)
-    SearchView term1_search;
-    @Bind(R.id.term2_search)
-    SearchView term2_search;
+    @Bind(R.id.subject_search)
+    SearchView subject_search;
+    @Bind(R.id.predicate_search)
+    SearchView predicate_search;
 
-    @Bind(R.id.new_term)
-    Button new_term;
+    @Bind(R.id.adjective_switch)
+    Switch adjective_switch;
+    @Bind(R.id.prep)
+    Spinner prep;
+    @Bind(R.id.than)
+    TextView than;
+    @Bind(R.id.by)
+    TextView by;
+    @Bind(R.id.of)
+    TextView of;
+
+    @Bind(R.id.object_search)
+    SearchView object_search;
+    @Bind(R.id.adjective_search)
+    SearchView adjective_search;
+
+    @Bind(R.id.subject_list)
+    ListView subject_list;
+    @Bind(R.id.predicate_list)
+    ListView predicate_list;
+    @Bind(R.id.object_list)
+    ListView object_list;
+    @Bind(R.id.adjective_list)
+    ListView adjective_list;
+
+    @Bind(R.id.prop_type)
+    TextView prop_type;
     @Bind(R.id.submit_prop)
     Button submit_prop;
 
     private String TAG = "Proposition Submit: ";
+
+    private static Integer cert1;
+    private static Integer cert2;
+
+    public static final ArrayList<Term> subjects = new ArrayList<>();
+    public static final ArrayList<Term> predicates = new ArrayList<>();
+    public static final ArrayList<Term> objects = new ArrayList<>();
+    public static final ArrayList<Term> adjectives = new ArrayList<>();
+    private TermSearchAdapter termsArrayAdapter;
+
+    private static Term subject;
+    private static Term predicate;
+    private static Term object;
+    private static Term adjective;
+
+    private static String subjectStr = "";
+    private static String predVerb;
+    private static String predicateStr = "";
+    private static String objectStr;
+    private static String adjectiveStr;
+    private static String preposition;
+    private static String propStr;
+
+    ParseQuery<Term> subjectQuery;
+    ParseQuery<Term> predicateQuery;
+    ParseQuery<Term> objectQuery;
+    ParseQuery<Term> adjectiveQuery;
+
+    private Boolean subjectOK = false;
+    private Boolean predicateOK = false;
+
+    private String genPart = "general";
+    private String propType = "";
+
+    //TODO: ADD NAVIGATION BACK TO SEARCH or PROP VIEW!!!
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +151,12 @@ public class SubmitPropActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        float width = (Globals.dpWidth - 50.f)*2;
+        //Initial Layout:
+
+
+        //Seekbar Drawable
+
+        float width = (Globals.dpWidth + 50.f)*2;
         Log.d(TAG, ((Float) width).toString());
 
         LinearGradient gradient = new LinearGradient(0.f, 0.f, width, 0.0f,
@@ -67,6 +164,61 @@ public class SubmitPropActivity extends ActionBarActivity {
                 null, Shader.TileMode.CLAMP);
         ShapeDrawable shape = new ShapeDrawable(new RectShape());
         shape.getPaint().setShader(gradient);
+
+
+
+        //View default visibility:
+
+        subject_list.setVisibility(View.INVISIBLE);
+        predicate_list.setVisibility(View.INVISIBLE);
+        object_list.setVisibility(View.INVISIBLE);
+        adjective_list.setVisibility(View.INVISIBLE);
+
+        adjective_search.setVisibility(View.INVISIBLE);
+        object_search.setVisibility(View.INVISIBLE);
+
+        prep.setVisibility(View.INVISIBLE);
+        than.setVisibility(View.INVISIBLE);
+        by.setVisibility(View.INVISIBLE);
+        of.setVisibility(View.INVISIBLE);
+
+        verb_s.setVisibility(View.INVISIBLE);
+        verb_p.setVisibility(View.VISIBLE);
+        helpers_1_s.setVisibility(View.INVISIBLE);
+        helpers_1_p.setVisibility(View.INVISIBLE);
+        helpers_2_s.setVisibility(View.INVISIBLE);
+        helpers_2_p.setVisibility(View.INVISIBLE);
+
+        qualifier_1.setVisibility(View.VISIBLE);
+        q1_seekbar.setVisibility(View.VISIBLE);
+        prop_type.setVisibility(View.INVISIBLE);
+
+        pickVerb("verb p");
+
+        //Disable Submit Button initially, enable when valid prop formed
+        submit_prop.setEnabled(false);
+
+
+        //Adjective Switch
+
+        adjective_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    adjective_search.setVisibility(View.VISIBLE);
+                } else {
+                    adjective_search.setVisibility(View.INVISIBLE);
+                    adjective = null;
+                }
+            }
+        });
+
+
+
+        //Seekbar ChangeListeners:
+
+        cert1 = 39;
+        q1_seekbar.setProgress(39);
         q1_seekbar.setProgressDrawable(shape);
         q1_seekbar.setThumb(getResources().getDrawable(R.drawable.cert_bar_thumb));
 
@@ -74,6 +226,8 @@ public class SubmitPropActivity extends ActionBarActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(TAG, ((Integer) progress).toString());
+                cert1 = progress;
+
                 if (progress < 5) {
                     qualifier_1.setText("No");
                 } else if (progress < 20) {
@@ -90,18 +244,15 @@ public class SubmitPropActivity extends ActionBarActivity {
                     qualifier_1.setText("All");
                 }
             }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
+        cert2 = 39;
+        q2_seekbar.setProgress(39);
         q2_seekbar.setProgressDrawable(shape);
         q2_seekbar.setThumb(getResources().getDrawable(R.drawable.cert_bar_thumb));
 
@@ -109,44 +260,750 @@ public class SubmitPropActivity extends ActionBarActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Log.d(TAG, ((Integer) progress).toString());
+                cert2 = progress;
+
                 if (progress < 5) {
-                    qualifier_2.setText("Never");
+                    qualifier_2.setText("never");
                 } else if (progress < 20) {
-                    qualifier_2.setText("Rarely");
+                    qualifier_2.setText("rarely");
                 } else if (progress < 40) {
-                    qualifier_2.setText("Occasionally");
+                    qualifier_2.setText("occasionally");
                 } else if (progress < 60) {
-                    qualifier_2.setText("Often");
+                    qualifier_2.setText("often");
                 } else if (progress < 80) {
-                    qualifier_2.setText("Usually");
+                    qualifier_2.setText("usually");
                 } else if (progress < 95) {
-                    qualifier_2.setText("Almost Always");
+                    qualifier_2.setText("almost always");
                 } else {
-                    qualifier_2.setText("Always");
+                    qualifier_2.setText("always");
                 }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
 
+
+
+
+
+        //SearchView Setup:
+
+        SearchManager searchManager = (SearchManager) SubmitPropActivity.this.getSystemService(Context.SEARCH_SERVICE);
+
+        View v1 = getLayoutInflater().inflate(R.layout.item_add_term, null);
+        subject_list.addFooterView(v1);
+        View v2 = getLayoutInflater().inflate(R.layout.item_add_term, null);
+        predicate_list.addFooterView(v2);
+        View v3 = getLayoutInflater().inflate(R.layout.item_add_term, null);
+        object_list.addFooterView(v3);
+        View v4 = getLayoutInflater().inflate(R.layout.item_add_term, null);
+        adjective_list.addFooterView(v4);
+
+
+
+
+
+        //SearchView TextListeners:
+
+        if (subject_search != null) {
+            subject_search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            subject_search.setIconifiedByDefault(false);
+
+            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+                public boolean onQueryTextChange(String newText) {
+                    Log.d("TEST","on query text change");
+
+                    if (newText.length() > 1) {
+                        subject_list.setVisibility(View.VISIBLE);
+                        subjectQuery = ParseQuery.getQuery(Term.class);
+                        subjectQuery.whereEqualTo("type","noun");
+                        subjectQuery.whereContains("term", newText);
+                        subjectQuery.orderByDescending("createdAt");
+
+                        subjectQuery.findInBackground(new FindCallback<Term>() {
+                            @Override
+                            public void done(List<Term> list, ParseException e) {
+                                subjects.clear();
+                                for (Term term : list) {
+                                    subjects.add(term);
+                                }
+                                Log.d("TEST", "populating list");
+                                termsArrayAdapter = new TermSearchAdapter(getApplicationContext(),
+                                        R.layout.search_item_term, subjects);
+                                termsArrayAdapter.updateAdapter(subjects);
+                                subject_list.setAdapter(termsArrayAdapter);
+                            }
+                        });
+                    } else {
+                        subject_list.setVisibility(View.INVISIBLE);
+                    }
+                    return true;
+                }
+
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+            };
+            subject_search.setOnQueryTextListener(queryTextListener);
+        }
+
+        if (predicate_search != null) {
+            predicate_search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            predicate_search.setIconifiedByDefault(false);
+
+            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+                public boolean onQueryTextChange(String newText) {
+                    Log.d("TEST","on query text change");
+
+                    if (newText.length() > 1) {
+                        predicate_list.setVisibility(View.VISIBLE);
+                        predicateQuery = ParseQuery.getQuery(Term.class);
+                        predicateQuery.whereContains("term", newText);
+                        predicateQuery.orderByDescending("createdAt");
+
+                        predicateQuery.findInBackground(new FindCallback<Term>() {
+                            @Override
+                            public void done(List<Term> list, ParseException e) {
+                                predicates.clear();
+                                for (Term term : list) {
+                                    predicates.add(term);
+                                }
+                                Log.d("TEST", "populating list");
+                                termsArrayAdapter = new TermSearchAdapter(getApplicationContext(),
+                                        R.layout.search_item_term, predicates);
+                                termsArrayAdapter.updateAdapter(predicates);
+                                predicate_list.setAdapter(termsArrayAdapter);
+                            }
+                        });
+                    } else {
+                        predicate_list.setVisibility(View.INVISIBLE);
+                    }
+                    return true;
+                }
+
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+            };
+            predicate_search.setOnQueryTextListener(queryTextListener);
+        }
+
+        if (adjective_search != null) {
+            adjective_search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            adjective_search.setIconifiedByDefault(false);
+
+            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+                public boolean onQueryTextChange(String newText) {
+                    Log.d("TEST","on query text change");
+
+                    if (newText.length() > 1) {
+                        adjective_list.setVisibility(View.VISIBLE);
+                        adjectiveQuery = ParseQuery.getQuery(Term.class);
+                        adjectiveQuery.whereEqualTo("type", "adjective");
+                        adjectiveQuery.whereContains("term", newText);
+                        adjectiveQuery.orderByDescending("createdAt");
+
+                        adjectiveQuery.findInBackground(new FindCallback<Term>() {
+                            @Override
+                            public void done(List<Term> list, ParseException e) {
+                                adjectives.clear();
+                                for (Term term : list) {
+                                    adjectives.add(term);
+                                }
+                                Log.d("TEST", "populating list");
+                                termsArrayAdapter = new TermSearchAdapter(getApplicationContext(),
+                                        R.layout.search_item_term, adjectives);
+                                termsArrayAdapter.updateAdapter(adjectives);
+                                adjective_list.setAdapter(termsArrayAdapter);
+                            }
+                        });
+                    } else {
+                        adjective_list.setVisibility(View.INVISIBLE);
+                    }
+                    return true;
+                }
+
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+            };
+            adjective_search.setOnQueryTextListener(queryTextListener);
+        }
+
+        if (object_search != null) {
+            object_search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            object_search.setIconifiedByDefault(false);
+
+            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+                public boolean onQueryTextChange(String newText) {
+                    Log.d("TEST","on query text change");
+
+                    if (newText.length() > 1) {
+                        object_list.setVisibility(View.VISIBLE);
+                        objectQuery = ParseQuery.getQuery(Term.class);
+                        objectQuery.whereEqualTo("type","noun");
+                        objectQuery.whereContains("term", newText);
+                        objectQuery.orderByDescending("createdAt");
+
+                        objectQuery.findInBackground(new FindCallback<Term>() {
+                            @Override
+                            public void done(List<Term> list, ParseException e) {
+                                objects.clear();
+                                for (Term term : list) {
+                                    objects.add(term);
+                                }
+                                Log.d("TEST", "populating list");
+                                termsArrayAdapter = new TermSearchAdapter(getApplicationContext(),
+                                        R.layout.search_item_term, objects);
+                                termsArrayAdapter.updateAdapter(objects);
+                                object_list.setAdapter(termsArrayAdapter);
+                            }
+                        });
+                    } else {
+                        object_list.setVisibility(View.INVISIBLE);
+                    }
+                    return true;
+                }
+
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+            };
+            object_search.setOnQueryTextListener(queryTextListener);
+        }
+
+
+
+
+
+        //Search Result List Item ClickListeners:
+
+        subject_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == subjects.size()) {
+                    Log.d(TAG, "new term");
+
+                    newTerm(subject_search.getQuery().toString(), "subject");
+
+                } else {
+                    Term term = subjects.get(position);
+                    Log.d(TAG, term.getTerm() + " selected");
+
+                    subject = term;
+                    String termStr;
+                    if (term.getCount() != 0) {
+                        termStr = term.getTerm() + " (" + term.getCount() + ")";
+                    } else {
+                        termStr = term.getTerm();
+                    }
+                    subject_search.setQuery(termStr, false);
+
+                    //subjectQuery.cancel();
+                    subjects.clear();
+                    termsArrayAdapter.updateAdapter(subjects);
+                    subject_list.setAdapter(termsArrayAdapter);
+                    subject_list.setVisibility(View.INVISIBLE);
+
+                    makeLayout();
+                }
+            }
+        });
+
+        predicate_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == predicates.size()) {
+                    Log.d(TAG, "new term");
+
+                    newTerm(predicate_search.getQuery().toString(), "predicate");
+
+                } else {
+                    Term term = predicates.get(position);
+                    Log.d(TAG, term.getTerm() + " selected");
+
+                    predicate = term;
+                    String termStr;
+                    if (term.getCount() != 0) {
+                        termStr = term.getTerm() + " (" + term.getCount() + ")";
+                    } else {
+                        termStr = term.getTerm();
+                    }
+                    predicate_search.setQuery(termStr, false);
+
+                    //predicateQuery.cancel();
+                    predicates.clear();
+                    termsArrayAdapter.updateAdapter(predicates);
+                    predicate_list.setAdapter(termsArrayAdapter);
+                    predicate_list.setVisibility(View.INVISIBLE);
+
+                    makeLayout();
+                }
+            }
+        });
+
+        adjective_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == adjectives.size()) {
+                    Log.d(TAG, "new term");
+
+                    newTerm(adjective_search.getQuery().toString(), "adjective");
+
+                } else {
+                    Term term = adjectives.get(position);
+                    Log.d(TAG, term.getTerm() + " selected");
+
+                    adjective = term;
+                    if (term.getCount() != 0) {
+                        adjectiveStr = term.getTerm() + " (" + term.getCount() + ")";
+                    } else {
+                        adjectiveStr = term.getTerm();
+                    }
+
+                    adjective_search.setQuery(adjectiveStr, false);
+
+                    adjectiveQuery.cancel();
+                    adjectives.clear();
+                    termsArrayAdapter.updateAdapter(adjectives);
+                    adjective_list.setAdapter(termsArrayAdapter);
+                    adjective_list.setVisibility(View.INVISIBLE);
+
+                    makeLayout();
+                }
+            }
+        });
+
+        object_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == objects.size()) {
+                    Log.d(TAG, "new term");
+
+                    newTerm(object_search.getQuery().toString(), "object");
+
+                } else {
+                    Term term = objects.get(position);
+                    Log.d(TAG, term.getTerm() + " selected");
+
+                    object = term;
+                    if (term.getCount() != 0) {
+                        objectStr = term.getTerm() + " (" + term.getCount() + ")";
+                    } else {
+                        objectStr = term.getTerm();
+                    }
+                    object_search.setQuery(objectStr, false);
+
+                    objectQuery.cancel();
+                    objects.clear();
+                    termsArrayAdapter.updateAdapter(objects);
+                    object_list.setAdapter(termsArrayAdapter);
+                    object_list.setVisibility(View.INVISIBLE);
+
+                    makeLayout();
+                }
             }
         });
     }
 
-    @OnClick(R.id.new_term)
-    public void newTerm() {
-        Intent intent = new Intent(SubmitPropActivity.this, SubmitTermActivity.class);
-        startActivity(intent);
-    }
+
+    //Submit Button
 
     @OnClick(R.id.submit_prop)
-    public void testnav() {
+    public void submitProp() {
+        Log.d(TAG, "Submit New Prop");
+        Prop newProp = new Prop();
+
+        JSONArray terms = new JSONArray();
+        terms.put(subject);
+        terms.put(predicate);
+        if (object_search.getVisibility() == View.VISIBLE) {
+            terms.put(object);
+        }
+        if (adjective_search.getVisibility() == View.VISIBLE) {
+            terms.put(adjective);
+        }
+
+        Log.d(TAG, "prop: " + propStr);
+        Log.d(TAG, "type: " + propType);
+        Log.d(TAG, "subject: " + subjectStr);
+        Log.d(TAG, "predicate: " + predicateStr);
+
+        newProp.setTerms(terms);
+        newProp.setSubject(subjectStr);
+        newProp.setPredicate(predicateStr);
+        newProp.setProp(propStr);
+        newProp.setPropType(propType);
+
+        newProp.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Toast.makeText(SubmitPropActivity.this, "Proposition Saved: \"" + propStr + "\"", Toast.LENGTH_LONG).show();
+                } else {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        });
+
+        //TODO: Go to Prop View with new Prop (put into intent)
+    }
+
+    //Functions
+
+    public void newTerm(String term, String where) {
         Intent intent = new Intent(SubmitPropActivity.this, SubmitTermActivity.class);
-        startActivity(intent);
+        intent.putExtra("term", term);
+        intent.putExtra("where", where);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            //TODO: Get/set term from SubmitTermActivity
+            if(resultCode == RESULT_OK){
+                Term resultTerm = (Term) data.getSerializableExtra("term");
+                String where = data.getStringExtra("where");
+                Log.d(TAG, "back from TermSubmit with " + resultTerm.getTerm() + " (" + resultTerm.getCount() + ")");
+                switch (where) {
+                    case "subject":
+                        subject = resultTerm;
+                        subject_search.setQuery(subject.getTerm(), true);
+                        break;
+                    case "predicate":
+                        predicate = resultTerm;
+                        predicate_search.setQuery(predicate.getTerm(), true);
+                        break;
+                    case "object":
+                        object = resultTerm;
+                        object_search.setQuery(object.getTerm(), true);
+                        break;
+                    case "adjective":
+                        adjective = resultTerm;
+                        adjective_search.setQuery(adjective.getTerm(), true);
+                        break;
+                    default:
+                        Log.e(TAG, "It doesn't know where to put the term!!!");
+                        break;
+                }
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //No term chosen (apparently)
+                Log.d(TAG, "back from TermSubmit, no term selected");
+            }
+        }
+        makeLayout();
+    }
+
+    public void makeLayout() {
+        //Set predicate (helper/linking) verb:
+
+        if (verb_s.getVisibility() == View.VISIBLE) {
+            predVerb = verb_s.getSelectedItem().toString();
+        } else if (verb_p.getVisibility() == View.VISIBLE) {
+            predVerb = verb_p.getSelectedItem().toString();
+        } else if (helpers_1_s.getVisibility() == View.VISIBLE) {
+            predVerb = helpers_1_s.getSelectedItem().toString();
+        } else if (helpers_1_p.getVisibility() == View.VISIBLE) {
+            predVerb = helpers_1_p.getSelectedItem().toString();
+        } else if (helpers_2_s.getVisibility() == View.VISIBLE) {
+            predVerb = helpers_1_s.getSelectedItem().toString();
+        } else if (helpers_2_p.getVisibility() == View.VISIBLE) {
+            predVerb = helpers_1_p.getSelectedItem().toString();
+        } else {
+            predVerb = "";
+        }
+
+        //Check Subject
+        if (subject != null) {
+            Log.d(TAG, "Subject exists");
+            subjectOK = true;
+
+            //Set up for type A
+            if (subject.getTypeA().equals("particular")) {
+                Log.d(TAG,"particular subject");
+                genPart = "particular";
+                qualifier_1.setVisibility(View.INVISIBLE);
+                q1_seekbar.setVisibility(View.INVISIBLE);
+            } else {
+                Log.d(TAG,"general (or no) subject");
+                genPart = "general";
+                qualifier_1.setVisibility(View.VISIBLE);
+                q1_seekbar.setVisibility(View.VISIBLE);
+            }
+
+            //Set up for type B
+            if (subject.getTypeB().equals("singular")) {
+                Log.d(TAG,"singular subject");
+                pickVerb("verb s");
+            } else {
+                Log.d(TAG,"plural (or no) subject");
+                pickVerb("verb p");
+            }
+        } else {
+
+            //Default Subject layout
+            Log.d(TAG, "default subject layout");
+            qualifier_1.setVisibility(View.VISIBLE);
+            q1_seekbar.setVisibility(View.VISIBLE);
+            pickVerb("verb p");
+        }
+
+        //Check Predicate
+
+        if (predicate != null) {
+            Log.d(TAG, "Predicate exists");
+            //Set up for type A
+            if (predicate.getType().equals("noun")) {
+
+                //Noun Layout
+                Log.d(TAG,"");
+
+                of.setVisibility(View.INVISIBLE);
+                by.setVisibility(View.INVISIBLE);
+                prep.setVisibility(View.INVISIBLE);
+                than.setVisibility(View.INVISIBLE);
+                object_search.setVisibility(View.INVISIBLE);
+                adjective_switch.setVisibility(View.VISIBLE);
+
+                if ((subject != null) && (subject.getTypeA().equals("singular"))) {
+                    Log.d(TAG,"singular noun");
+                    pickVerb("verb s");
+                    predVerb = "is";
+                } else {
+                    Log.d(TAG,"plural noun (or null)");
+                    pickVerb("verb p");
+                    predVerb = "are";
+                }
+
+                if (adjective_search.getVisibility() == View.VISIBLE) {
+                    Log.d(TAG,"adjective");
+                    predicateOK = (adjective != null);
+                } else {
+                    Log.d(TAG,"no adjective");
+                    predicateOK = true;
+                }
+
+            } else if (predicate.getType().equals("verb")) {
+
+                //Verb Layout
+                Log.d(TAG, "verb layout");
+
+                of.setVisibility(View.INVISIBLE);
+                than.setVisibility(View.INVISIBLE);
+                adjective_switch.setVisibility(View.INVISIBLE);
+
+                if ((subject != null) && (subject.getTypeA().equals("singular"))) {
+                    pickVerb("helper 1s");
+                    predVerb = "";
+                } else {
+                    pickVerb("helper ip");
+                    predVerb = "";
+                }
+
+                if (predicate.getTypeA().equals("passive")) {
+                    Log.d(TAG, "passive verb");
+                    prep.setVisibility(View.INVISIBLE);
+                    by.setVisibility(View.VISIBLE);
+                    object_search.setVisibility(View.VISIBLE);
+                    predicateOK = (object != null);
+                } else if (predicate.getTypeA().equals("transitive")) {
+                    Log.d(TAG, "transitive verb");
+                    prep.setVisibility(View.VISIBLE);
+                    by.setVisibility(View.INVISIBLE);
+                    object_search.setVisibility(View.VISIBLE);
+                    predicateOK = (object != null);
+                } else {
+                    Log.d(TAG, "active verb");
+                    prep.setVisibility(View.INVISIBLE);
+                    by.setVisibility(View.INVISIBLE);
+                    object_search.setVisibility(View.INVISIBLE);
+                    predicateOK = true;
+                }
+
+            } else if (predicate.getType().equals("adjective")) {
+
+                //Adjective Layout
+                Log.d(TAG,"adjective layout");
+
+                by.setVisibility(View.INVISIBLE);
+                prep.setVisibility(View.INVISIBLE);
+                adjective_switch.setVisibility(View.INVISIBLE);
+
+                if ((subject != null) && (subject.getTypeA().equals("singular"))) {
+                    pickVerb("helper 2s");
+                    predVerb = "is";
+                } else {
+                    pickVerb("helper 2p");
+                    predVerb = "are";
+                }
+
+                if (predicate.getTypeB().equals("comparative")) {
+                    object_search.setVisibility(View.VISIBLE);
+                    than.setVisibility(View.VISIBLE);
+                    of.setVisibility(View.INVISIBLE);
+                    predicateOK = (object != null);
+                } else if (predicate.getTypeB().equals("superlative")) {
+                    object_search.setVisibility(View.VISIBLE);
+                    than.setVisibility(View.INVISIBLE);
+                    of.setVisibility(View.VISIBLE);
+                    predicateOK = (object != null);
+                } else {
+                    object_search.setVisibility(View.INVISIBLE);
+                    than.setVisibility(View.INVISIBLE);
+                    prep.setVisibility(View.INVISIBLE);
+                    object = null;
+                    predicateOK = true;
+                }
+            } else {
+                Log.e(TAG, "Something went horribly wrong...");
+            }
+        } else {
+            //Default Predicate View
+            Log.d(TAG,"default predicate view");
+            pickVerb("verb p");
+            predVerb = "are";
+            predicateOK = false;
+
+            of.setVisibility(View.INVISIBLE);
+            by.setVisibility(View.INVISIBLE);
+            prep.setVisibility(View.INVISIBLE);
+            than.setVisibility(View.INVISIBLE);
+            object_search.setVisibility(View.INVISIBLE);
+            adjective_switch.setVisibility(View.VISIBLE);
+        }
+
+        prop_type.setVisibility(View.VISIBLE);
+
+        if (genPart.equals("general")) {
+            if (cert1 < 6) {
+                //E
+                propType = "E";
+                prop_type.setText("E - Universal Negative");
+            } else {
+                //A
+                propType = "A";
+                prop_type.setText("A - Universal Affirmative");
+            }
+        } else {
+            if (cert2 < 6) {
+                //O
+                propType = "O";
+                prop_type.setText("O - Particular Negative");
+            } else {
+                //I
+                propType = "I";
+                prop_type.setText("I - Particular Affirmative");
+            }
+        }
+
+        if (subjectOK && predicateOK) {
+            submit_prop.setEnabled(true);
+            buildPropStr();
+        }
+    }
+
+    public void pickVerb(String view) {
+        Log.d(TAG,"pickVerb: " + view);
+        verb_s.setVisibility(View.INVISIBLE);
+        verb_p.setVisibility(View.INVISIBLE);
+        helpers_1_s.setVisibility(View.INVISIBLE);
+        helpers_1_p.setVisibility(View.INVISIBLE);
+        helpers_2_s.setVisibility(View.INVISIBLE);
+        helpers_2_p.setVisibility(View.INVISIBLE);
+
+        switch (view) {
+            case "verb s":
+                verb_s.setVisibility(View.VISIBLE);
+                break;
+            case "verb p":
+                verb_p.setVisibility(View.VISIBLE);
+                break;
+            case "helper 1s":
+                helpers_1_s.setVisibility(View.VISIBLE);
+                break;
+            case "helper 1p":
+                helpers_1_p.setVisibility(View.VISIBLE);
+                break;
+            case "helper 2s":
+                helpers_2_s.setVisibility(View.VISIBLE);
+                break;
+            case "helper 2p":
+                helpers_2_p.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void buildPropStr() {
+        Log.d(TAG, "Building Prop String...");
+        //TODO: Experiment with different types, make sure this works right!!!!
+        preposition = prep.getSelectedItem().toString();
+
+        if (qualifier_1.getVisibility() == View.VISIBLE) {
+            subjectStr += qualifier_1.getText() + " ";
+        }
+
+        subjectStr += subject.getTerm();
+        if (subject.getCount() > 0) {
+            subjectStr += " (" + subject.getCount() + ") ";
+        }
+
+        predicateStr = predVerb + " " + qualifier_2.getText() + " ";
+
+        if (predicate.getType().equals("noun")) {
+            //Noun predicate
+
+            if (adjective_search.getVisibility() == View.VISIBLE) {
+                predicateStr += adjective.getTerm() + " " + predicate.getTerm() + ".";
+            } else {
+                predicateStr += predicate.getTerm() + ".";
+            }
+        } else if (predicate.getType().equals("verb")) {
+            //Verb predicate
+
+            if (predicate.getTypeA().equals("passive")) {
+                //Passive
+
+                predicateStr += predicate.getTerm() + " by " + object.getTerm();
+                if (object.getCount() > 0) {
+                    predicateStr += " (" + object.getCount() + ").";
+                }
+            } else if (predicate.getTypeA().equals("transitive")) {
+                //Transitive
+
+                predicateStr += predicate.getTerm() + " " + preposition + " " + object.getTerm();
+                if (object.getCount() > 0) {
+                    predicateStr += " (" + object.getCount() + ").";
+                }
+            } else {
+                //Active, intransitive
+
+                predicateStr += predicate.getTerm();
+                if (predicate.getCount() > 0) {
+                    predicateStr += " (" + predicate.getCount() + ").";
+                } else {
+                    predicateStr += ".";
+                }
+            }
+        } else if (predicate.getType().equals("adjective")) {
+            predicateStr += predicate.getTerm();
+            if (predicate.getCount() > 0) {
+                predicateStr += " (" + predicate.getCount() + ").";
+            }
+        } else {
+            Log.e(TAG, "String failed to build properly");
+        }
+
+        propStr = subjectStr + predicateStr;
+
+        Log.d(TAG, propStr);
     }
 }

@@ -1,6 +1,7 @@
 package com.elevenfifty.reasonweb;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elevenfifty.reasonweb.Models.Term;
+import com.elevenfifty.reasonweb.Utils.ParseProxyObject;
 import com.elevenfifty.reasonweb.Utils.TermArrayAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -117,6 +119,8 @@ public class SubmitTermActivity extends ActionBarActivity {
     private String typeA;
     private String typeB;
 
+    private String where;
+
     private String TAG = "Term Submit: ";
     //private Context context = this;
 
@@ -129,6 +133,14 @@ public class SubmitTermActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+
+        where = intent.getStringExtra("where");
+        termStr = intent.getStringExtra("term");
+        if (!termStr.equals("")) {
+            term_text.setText(termStr);
+        }
+
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = this.getWindow();
             // clear FLAG_TRANSLUCENT_STATUS flag:
@@ -138,6 +150,8 @@ public class SubmitTermActivity extends ActionBarActivity {
             // finally change the color
             window.setStatusBarColor(this.getResources().getColor(R.color.dark_green));
         }
+
+        //Set up Default Layout
 
         general_radio.setChecked(true);
         singular_radio.setChecked(true);
@@ -185,6 +199,8 @@ public class SubmitTermActivity extends ActionBarActivity {
     @OnClick(R.id.submit_term)
     public void submitTerm() {
         //Set term and definition from EditTexts
+        Log.d(TAG, "Submit Button pressed");
+
         termStr = term_text.getText().toString();
         definitionStr = definition_text.getText().toString();
 
@@ -214,15 +230,20 @@ public class SubmitTermActivity extends ActionBarActivity {
                     break;
             }
 
-            typeStr = type + " " + typeA + " " + typeB;
+            typeStr = typeA + " " + typeB  + " " + type;
 
             ParseQuery<Term> termQuery = new ParseQuery<>(Term.class);
             //TODO: Come up with a better way to do this using regular expressions?
-            termQuery.whereContains("term", termStr);
-
+            termQuery.whereEqualTo("term", termStr);
+            termQuery.orderByAscending("count");
+            Log.d(TAG, "Running query...");
             termQuery.findInBackground(new FindCallback<Term>() {
                 @Override
                 public void done(List<Term> list, ParseException e) {
+                    Log.d(TAG, "Query finished");
+                    if (e != null) {
+                        Log.e(TAG, e.getMessage());
+                    }
                     //TODO: Check to make sure terms in definition are valid???
                     if (list.isEmpty()) {
                         //Term is new, make a new Term object
@@ -234,6 +255,7 @@ public class SubmitTermActivity extends ActionBarActivity {
                         newTerm.setType(type);
                         newTerm.setTypeA(typeA);
                         newTerm.setTypeB(typeB);
+                        newTerm.setCount(0);
 
                         confirmTerm(newTerm);
                     } else {
@@ -245,11 +267,10 @@ public class SubmitTermActivity extends ActionBarActivity {
                     }
                 }
             });
-            termQuery.cancel();
         }
     }
 
-    public void termExists(ArrayList<Term> terms) {
+    public void termExists(final ArrayList<Term> terms) {
         //TODO: USE CARDS TO SHOW DEFINITIONS OF TERM!!!!
 
         final Dialog e_dialog = new Dialog(this, R.style.Dialog_No_Border);
@@ -265,6 +286,22 @@ public class SubmitTermActivity extends ActionBarActivity {
         arrayAdapter.updateAdapter(terms);
         term_list.setAdapter(arrayAdapter);
 
+        //TODO: Set OnItemClickListener on term_list, take selected term and go back to Prop Submit
+        term_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, terms.get(position).getTerm() + " selected");
+                Term term = terms.get(position);
+
+                ParseProxyObject ppo = new ParseProxyObject(term);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("term", ppo);
+                returnIntent.putExtra("where", where);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
+        });
+
         Button newTerm = (Button) e_dialog_view.findViewById(R.id.new_term_button);
         Button back = (Button) e_dialog_view.findViewById(R.id.back_button);
 
@@ -275,9 +312,12 @@ public class SubmitTermActivity extends ActionBarActivity {
             public void onClick(View p_v) {
                 switch (p_v.getId()) {
                     case R.id.new_term_button:
+                        //TODO: ADD (#) to the end of the term (if there are exact matches, minus the (#)
+
                         Term newTerm = new Term();
 
                         newTerm.setTerm(termStr);
+                        newTerm.setCount(terms.size() + 1);
                         newTerm.setDefinition(definitionStr);
                         newTerm.setType(type);
                         newTerm.setTypeA(typeA);
@@ -312,8 +352,8 @@ public class SubmitTermActivity extends ActionBarActivity {
         LayoutInflater dialog_inflater = LayoutInflater.from(this);
         View c_dialog_view = dialog_inflater.inflate(R.layout.confirm_term, null);
 
-        TextView confirm_term_text = (TextView) c_dialog_view.findViewById(R.id.confirm_term_title);
-        TextView confirm_term_type = (TextView) c_dialog_view.findViewById(R.id.confirm_term_text);
+        TextView confirm_term_text = (TextView) c_dialog_view.findViewById(R.id.confirm_term_text);
+        TextView confirm_term_type = (TextView) c_dialog_view.findViewById(R.id.confirm_term_type);
         TextView confirm_definition_text = (TextView) c_dialog_view.findViewById(R.id.confirm_definition_text);
 
         Button new_term_button = (Button) c_dialog_view.findViewById(R.id.new_term_button);
@@ -333,7 +373,16 @@ public class SubmitTermActivity extends ActionBarActivity {
                             public void done(ParseException e) {
                                 if (e == null) {
                                     Toast.makeText(SubmitTermActivity.this, "New Term Saved!", Toast.LENGTH_SHORT).show();
+
+                                    //Go back to Prop Activity with term
+
+                                    ParseProxyObject ppo = new ParseProxyObject(term);
+                                    Intent returnIntent = new Intent();
+                                    returnIntent.putExtra("term", ppo);
+                                    returnIntent.putExtra("where", where);
+                                    setResult(RESULT_OK, returnIntent);
                                     c_dialog.dismiss();
+                                    finish();
                                 }
                             }
                         });

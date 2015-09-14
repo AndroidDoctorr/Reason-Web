@@ -16,11 +16,11 @@ import butterknife.OnClick;
  *
  */
 
-public class ViewSyllActivity extends ActionBarActivity {
-    @Bind(R.id.submit_syll)
-    Button submit_syll;
+public class ViewTermActivity extends ActionBarActivity {
+    @Bind(R.id.submit_term)
+    Button submit_term;
 
-    private String TAG = "Syll View";
+    private String TAG = "Term View";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,14 +38,14 @@ public class ViewSyllActivity extends ActionBarActivity {
             // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             // finally change the color
-            window.setStatusBarColor(this.getResources().getColor(R.color.dark_orange));
+            window.setStatusBarColor(this.getResources().getColor(R.color.dark_green));
         }
 
 
     }
 
-    @OnClick(R.id.submit_syll)
-    public void submitSyll() {
+    @OnClick(R.id.submit_term)
+    public void submitTerm() {
 
     }
 }

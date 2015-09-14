@@ -20,13 +20,13 @@ import butterknife.ButterKnife;
  *
  */
 
-public class TermArrayAdapter extends ArrayAdapter<Term> {
+public class TermSearchAdapter extends ArrayAdapter<Term> {
     private int resource;
     private ArrayList<Term> terms;
     private LayoutInflater inflater;
     View view;
 
-    public TermArrayAdapter(Context context, int resource, ArrayList<Term> objects) {
+    public TermSearchAdapter(Context context, int resource, ArrayList<Term> objects) {
         super(context, resource, objects);
         this.resource = resource;
         this.terms = objects;
@@ -47,24 +47,17 @@ public class TermArrayAdapter extends ArrayAdapter<Term> {
 
         Term term = terms.get(position);
 
-        if (term.getCount() != 0) {
-            holder.term_text.setText(term.getTerm() + " (" + term.getCount() + ")");
-        } else {
-            holder.term_text.setText(term.getTerm());
-        }
-        holder.types_text.setText(term.getTypeA() + " " + term.getTypeB() + " " + term.getType());
-        holder.definition_text.setText(term.getDefinition());
+        holder.search_item_term.setText(term.getTerm());
+        holder.search_item_definition.setText(term.getDefinition());
 
         return convertView;
     }
 
     static class ViewHolder {
-        @Bind(R.id.term_text)
-        TextView term_text;
-        @Bind(R.id.types_text)
-        TextView types_text;
-        @Bind(R.id.definition_text)
-        TextView definition_text;
+        @Bind(R.id.search_item_term)
+        TextView search_item_term;
+        @Bind(R.id.search_item_definition)
+        TextView search_item_definition;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

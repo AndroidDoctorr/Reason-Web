@@ -25,4 +25,57 @@
         <item>Verb</item>
         <item>Adjective</item>
     </string-array>
+    <string-array name="verb_s_array">
+        <item>is</item>
+        <item>has</item>
+        <item>makes</item>
+    </string-array>
+    <string-array name="verb_p_array">
+        <item>are</item>
+        <item>have</item>
+        <item>make</item>
+    </string-array>
+    <string-array name="helpers_1s_array">
+        <item> </item>
+        <item>is</item>
+        <item>can</item>
+        <item>should</item>
+    </string-array>
+    <string-array name="helpers_1p_array">
+        <item> </item>
+        <item>are</item>
+        <item>can</item>
+        <item>should</item>
+    </string-array>
+    <string-array name="helpers_2s_array">
+        <item>is</item>
+        <item>can be</item>
+        <item>should be</item>
+    </string-array>
+    <string-array name="helpers_2p_array">
+        <item>are</item>
+        <item>can be</item>
+        <item>should be</item>
+    </string-array>
+    <string-array name="helpers_3s_array">
+        <item> </item>
+        <item> </item>
+        <item> </item>
+    </string-array>
+    <string-array name="helpers_3p_array">
+        <item> </item>
+        <item> </item>
+        <item> </item>
+    </string-array>
+    <string-array name="prepositions">
+        <item>to</item>
+        <item>at</item>
+        <item>for</item>
+        <item>on</item>
+        <item>around</item>
+        <item>above</item>
+        <item>below</item>
+        <item>in</item>
+        <item>between</item>
+    </string-array>
 </resources>

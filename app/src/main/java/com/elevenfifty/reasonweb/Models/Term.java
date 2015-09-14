@@ -26,6 +26,7 @@ public class Term extends ParseObject {
     private String type;
     private String typeA;
     private String typeB;
+    private Integer count;
 
     public String getType() {
         return getString("type");
@@ -65,5 +66,13 @@ public class Term extends ParseObject {
 
     public void setTypeB(String typeB) {
         put("typeB", typeB);
+    }
+
+    public Integer getCount() {
+        return getInt("count");
+    }
+
+    public void setCount(Integer count) {
+        put("count", count);
     }
 }

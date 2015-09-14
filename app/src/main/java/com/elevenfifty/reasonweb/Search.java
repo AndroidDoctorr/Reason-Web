@@ -11,6 +11,7 @@ import android.view.ViewGroup;
  * Created by Andrew on 7/27/2015.
  *
  */
+
 public class Search extends Fragment {
     //ArrayList<Note> notes = new ArrayList<>();
 

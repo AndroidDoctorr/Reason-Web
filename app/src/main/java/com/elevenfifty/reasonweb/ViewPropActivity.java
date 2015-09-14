@@ -26,7 +26,7 @@ public class ViewPropActivity extends ActionBarActivity {
     @Bind(R.id.submit_prop)
     Button submit_prop;
 
-    private final String TAG = "Proposition Activity";
+    private final String TAG = "Prop View";
     int xi;
     int yi;
 
@@ -39,7 +39,8 @@ public class ViewPropActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //TODO: Make premises clickable
+        //TODO: Try to get prop from intent, if null, load "All Men are Mortal" by default
+        //TODO: Make terms clickable - use Linky() thing, to to Term View
         //TODO: Add type and confidence
     }
 
