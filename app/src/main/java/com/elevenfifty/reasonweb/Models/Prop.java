@@ -15,7 +15,8 @@ public class Prop extends ParseObject {
     private String subject;
     private String predicate;
     private String propType;
-    private JSONArray terms;  //???? Do I want to have pointers for anything else?
+    private JSONArray terms;
+    private String searchStr;
 
     public String getProp() {
         return getString("prop");
@@ -55,6 +56,14 @@ public class Prop extends ParseObject {
 
     public void setPropType(String propType) {
         put("propType", propType);
+    }
+
+    public String getSearchStr() {
+        return getString("searchStr");
+    }
+
+    public void setSearchStr(String searchStr) {
+        put("searchStr", searchStr);
     }
 
     /*public ArrayList<Syll> getReasons() {

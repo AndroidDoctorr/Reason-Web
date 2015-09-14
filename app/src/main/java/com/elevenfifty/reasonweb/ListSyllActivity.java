@@ -12,11 +12,13 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Andrew on 7/28/2015.
@@ -26,6 +28,8 @@ import butterknife.ButterKnife;
 public class ListSyllActivity extends ActionBarActivity {
     @Bind(R.id.submit_syll)
     Button submit_syll;
+    @Bind(R.id.syll_back)
+    TextView syll_back;
 
     private String TAG = "Syllogism List";
     int xi;
@@ -104,6 +108,19 @@ public class ListSyllActivity extends ActionBarActivity {
             default :
                 return super.onTouchEvent(event);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.in_right, R.anim.out_right);
+        super.onBackPressed();
+    }
+
+    @OnClick(R.id.syll_back)
+    public void goBack() {
+        Intent intent = new Intent(ListSyllActivity.this, ViewPropActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_right, R.anim.out_right);
     }
 
     @Override

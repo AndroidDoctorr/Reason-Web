@@ -28,6 +28,7 @@ public class Evid extends ParseObject {
     private Double cert;
     private Integer votes;
     private Double voteSum;
+    private String searchStr;
 
     public String getTitle() {
         return getString("title");
@@ -125,5 +126,13 @@ public class Evid extends ParseObject {
 
     public void setVoteSum(Double voteSum) {
         put("voteSum",voteSum);
+    }
+
+    public String getSearchStr() {
+        return getString("searchStr");
+    }
+
+    public void setSearchStr(String searchStr) {
+        put("searchStr", searchStr);
     }
 }

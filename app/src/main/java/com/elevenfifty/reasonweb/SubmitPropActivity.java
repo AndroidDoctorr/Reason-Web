@@ -28,6 +28,7 @@ import com.elevenfifty.reasonweb.Models.Prop;
 import com.elevenfifty.reasonweb.Models.Term;
 import com.elevenfifty.reasonweb.Utils.TermSearchAdapter;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
@@ -104,6 +105,8 @@ public class SubmitPropActivity extends ActionBarActivity {
     TextView prop_type;
     @Bind(R.id.submit_prop)
     Button submit_prop;
+    @Bind(R.id.cancel)
+    Button cancel;
 
     private String TAG = "Proposition Submit: ";
 
@@ -140,6 +143,8 @@ public class SubmitPropActivity extends ActionBarActivity {
     private String genPart = "general";
     private String propType = "";
 
+    ShapeDrawable shape;
+
     //TODO: ADD NAVIGATION BACK TO SEARCH or PROP VIEW!!!
 
     @Override
@@ -156,16 +161,7 @@ public class SubmitPropActivity extends ActionBarActivity {
 
         //Seekbar Drawable
 
-        float width = (Globals.dpWidth + 50.f)*2;
-        Log.d(TAG, ((Float) width).toString());
-
-        LinearGradient gradient = new LinearGradient(0.f, 0.f, width, 0.0f,
-                new int[] {0xFFFF0000, 0xFFFFFFFF, 0xFF00FF00},
-                null, Shader.TileMode.CLAMP);
-        ShapeDrawable shape = new ShapeDrawable(new RectShape());
-        shape.getPaint().setShader(gradient);
-
-
+        seekbarDrawable();
 
         //View default visibility:
 
@@ -611,6 +607,12 @@ public class SubmitPropActivity extends ActionBarActivity {
         });
     }
 
+    //Cancel (Go back)
+    @OnClick(R.id.cancel)
+    public void goBack() {
+        Intent intent = new Intent(SubmitPropActivity.this, ViewPropActivity.class);
+        startActivity(intent);
+    }
 
     //Submit Button
 
@@ -639,6 +641,7 @@ public class SubmitPropActivity extends ActionBarActivity {
         newProp.setPredicate(predicateStr);
         newProp.setProp(propStr);
         newProp.setPropType(propType);
+        newProp.setSearchStr(propStr.toLowerCase());
 
         newProp.saveInBackground(new SaveCallback() {
             @Override
@@ -652,6 +655,13 @@ public class SubmitPropActivity extends ActionBarActivity {
         });
 
         //TODO: Go to Prop View with new Prop (put into intent)
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SubmitPropActivity.this, ViewPropActivity.class);
+        startActivity(intent);
     }
 
     //Functions
@@ -668,30 +678,40 @@ public class SubmitPropActivity extends ActionBarActivity {
         if (requestCode == 1) {
             //TODO: Get/set term from SubmitTermActivity
             if(resultCode == RESULT_OK){
-                Term resultTerm = (Term) data.getSerializableExtra("term");
-                String where = data.getStringExtra("where");
-                Log.d(TAG, "back from TermSubmit with " + resultTerm.getTerm() + " (" + resultTerm.getCount() + ")");
-                switch (where) {
-                    case "subject":
-                        subject = resultTerm;
-                        subject_search.setQuery(subject.getTerm(), true);
-                        break;
-                    case "predicate":
-                        predicate = resultTerm;
-                        predicate_search.setQuery(predicate.getTerm(), true);
-                        break;
-                    case "object":
-                        object = resultTerm;
-                        object_search.setQuery(object.getTerm(), true);
-                        break;
-                    case "adjective":
-                        adjective = resultTerm;
-                        adjective_search.setQuery(adjective.getTerm(), true);
-                        break;
-                    default:
-                        Log.e(TAG, "It doesn't know where to put the term!!!");
-                        break;
-                }
+                String termID = data.getStringExtra("termID");
+                final String where = data.getStringExtra("where");
+                ParseQuery<Term> termQuery = ParseQuery.getQuery(Term.class);
+                termQuery.getInBackground(termID, new GetCallback<Term>() {
+                    @Override
+                    public void done(Term resultTerm, ParseException e) {
+                        if (e == null) {
+                            Log.d(TAG, "back from TermSubmit with " + resultTerm.getTerm() + " (" + resultTerm.getCount() + ")");
+                            switch (where) {
+                                case "subject":
+                                    subject = resultTerm;
+                                    subject_search.setQuery(subject.getTerm(), true);
+                                    break;
+                                case "predicate":
+                                    predicate = resultTerm;
+                                    predicate_search.setQuery(predicate.getTerm(), true);
+                                    break;
+                                case "object":
+                                    object = resultTerm;
+                                    object_search.setQuery(object.getTerm(), true);
+                                    break;
+                                case "adjective":
+                                    adjective = resultTerm;
+                                    adjective_search.setQuery(adjective.getTerm(), true);
+                                    break;
+                                default:
+                                    Log.e(TAG, "It doesn't know where to put the term!!!");
+                                    break;
+                            }
+                        } else {
+                            Log.e(TAG, e.getCode() + ": " + e.getMessage());
+                        }
+                    }
+                });
             }
             if (resultCode == RESULT_CANCELED) {
                 //No term chosen (apparently)
@@ -763,7 +783,7 @@ public class SubmitPropActivity extends ActionBarActivity {
             if (predicate.getType().equals("noun")) {
 
                 //Noun Layout
-                Log.d(TAG,"");
+                Log.d(TAG,"Noun predicate");
 
                 of.setVisibility(View.INVISIBLE);
                 by.setVisibility(View.INVISIBLE);
@@ -793,7 +813,7 @@ public class SubmitPropActivity extends ActionBarActivity {
             } else if (predicate.getType().equals("verb")) {
 
                 //Verb Layout
-                Log.d(TAG, "verb layout");
+                Log.d(TAG, "Verb predicate");
 
                 of.setVisibility(View.INVISIBLE);
                 than.setVisibility(View.INVISIBLE);
@@ -827,10 +847,15 @@ public class SubmitPropActivity extends ActionBarActivity {
                     predicateOK = true;
                 }
 
+                if (predicate.getTerm().equals(subject.getTerm()) && predicate.getCount().equals(subject.getCount())) {
+                    predicateOK = false;
+                    prop_type.setText("Invalid (Tautology)");
+                }
+
             } else if (predicate.getType().equals("adjective")) {
 
                 //Adjective Layout
-                Log.d(TAG,"adjective layout");
+                Log.d(TAG,"Adjective predicate");
 
                 by.setVisibility(View.INVISIBLE);
                 prep.setVisibility(View.INVISIBLE);
@@ -906,6 +931,8 @@ public class SubmitPropActivity extends ActionBarActivity {
         if (subjectOK && predicateOK) {
             submit_prop.setEnabled(true);
             buildPropStr();
+        } else {
+            prop_type.setText("");
         }
     }
 
@@ -1005,5 +1032,16 @@ public class SubmitPropActivity extends ActionBarActivity {
         propStr = subjectStr + predicateStr;
 
         Log.d(TAG, propStr);
+    }
+
+    public void seekbarDrawable() {
+        float width = (Globals.dpWidth + 50.f)*2;
+        Log.d(TAG, ((Float) width).toString());
+
+        LinearGradient gradient = new LinearGradient(0.f, 0.f, width, 0.0f,
+                new int[] {0xFFFF0000, 0xFFFFFFFF, 0xFF00FF00},
+                null, Shader.TileMode.CLAMP);
+        shape = new ShapeDrawable(new RectShape());
+        shape.getPaint().setShader(gradient);
     }
 }

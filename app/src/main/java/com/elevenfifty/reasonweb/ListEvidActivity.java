@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -30,6 +31,8 @@ public class ListEvidActivity extends ActionBarActivity {
     Button submit_evid;
     @Bind(R.id.evid_list)
     ListView evid_list;
+    @Bind(R.id.evid_back)
+    TextView evid_back;
 
     private String TAG = "Evidence List";
     int xi;
@@ -110,6 +113,19 @@ public class ListEvidActivity extends ActionBarActivity {
             default :
                 return super.onTouchEvent(event);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.in_left, R.anim.out_left);
+        super.onBackPressed();
+    }
+
+    @OnClick(R.id.evid_back)
+    public void goBack() {
+        Intent intent = new Intent(ListEvidActivity.this, ViewPropActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_left, R.anim.out_left);
     }
 
     @OnClick(R.id.submit_evid)

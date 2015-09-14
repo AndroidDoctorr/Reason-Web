@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elevenfifty.reasonweb.Models.Term;
-import com.elevenfifty.reasonweb.Utils.ParseProxyObject;
 import com.elevenfifty.reasonweb.Utils.TermArrayAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -255,6 +254,7 @@ public class SubmitTermActivity extends ActionBarActivity {
                         newTerm.setType(type);
                         newTerm.setTypeA(typeA);
                         newTerm.setTypeB(typeB);
+                        newTerm.setSearchStr(termStr.toLowerCase() + definitionStr.toLowerCase());
                         newTerm.setCount(0);
 
                         confirmTerm(newTerm);
@@ -286,16 +286,15 @@ public class SubmitTermActivity extends ActionBarActivity {
         arrayAdapter.updateAdapter(terms);
         term_list.setAdapter(arrayAdapter);
 
-        //TODO: Set OnItemClickListener on term_list, take selected term and go back to Prop Submit
+        //TODO: Make sure term comes back to SubmitProp and to the right place
         term_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, terms.get(position).getTerm() + " selected");
                 Term term = terms.get(position);
 
-                ParseProxyObject ppo = new ParseProxyObject(term);
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("term", ppo);
+                returnIntent.putExtra("termID", term.getObjectId());
                 returnIntent.putExtra("where", where);
                 setResult(RESULT_OK, returnIntent);
                 finish();
@@ -312,7 +311,7 @@ public class SubmitTermActivity extends ActionBarActivity {
             public void onClick(View p_v) {
                 switch (p_v.getId()) {
                     case R.id.new_term_button:
-                        //TODO: ADD (#) to the end of the term (if there are exact matches, minus the (#)
+                        //New Term (shown with a "(#)" at the end showing the definition #)
 
                         Term newTerm = new Term();
 
@@ -322,6 +321,7 @@ public class SubmitTermActivity extends ActionBarActivity {
                         newTerm.setType(type);
                         newTerm.setTypeA(typeA);
                         newTerm.setTypeB(typeB);
+                        newTerm.setSearchStr(termStr.toLowerCase() + definitionStr.toLowerCase());
 
                         confirmTerm(newTerm);
 
@@ -376,9 +376,8 @@ public class SubmitTermActivity extends ActionBarActivity {
 
                                     //Go back to Prop Activity with term
 
-                                    ParseProxyObject ppo = new ParseProxyObject(term);
                                     Intent returnIntent = new Intent();
-                                    returnIntent.putExtra("term", ppo);
+                                    returnIntent.putExtra("termID", term.getObjectId());
                                     returnIntent.putExtra("where", where);
                                     setResult(RESULT_OK, returnIntent);
                                     c_dialog.dismiss();

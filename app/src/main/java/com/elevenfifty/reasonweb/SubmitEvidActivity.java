@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Andrew on 8/24/2015.
@@ -63,5 +64,10 @@ public class SubmitEvidActivity extends ActionBarActivity {
             // finally change the color
             window.setStatusBarColor(this.getResources().getColor(R.color.dark_orange));
         }
+    }
+
+    @OnClick(R.id.evidence_image)
+    public void evidenceImage() {
+        //TODO: Dialog to ask for camera or image upload from hard disk
     }
 }

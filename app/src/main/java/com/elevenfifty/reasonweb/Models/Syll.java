@@ -21,6 +21,10 @@ public class Syll extends ParseObject {
     private String concStr;
     private Integer type;
     private String expl;
+    private Double cert;
+    private Integer votes;
+    private Double voteSum;
+    private String searchStr;
 
     public Prop getPrem1() {
         return (Prop) getParseObject("prem1");
@@ -84,5 +88,13 @@ public class Syll extends ParseObject {
 
     public void setExpl(String expl) {
         put("expl",expl);
+    }
+
+    public String getSearchStr() {
+        return getString("searchStr");
+    }
+
+    public void setSearchStr(String searchStr) {
+        put("searchStr", searchStr);
     }
 }

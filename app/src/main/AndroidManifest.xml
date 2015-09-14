@@ -3,6 +3,8 @@
     package="com.elevenfifty.reasonweb">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
@@ -21,6 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Login/Profile -->
+
         <activity android:name=".LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -34,6 +39,8 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- View Pages -->
+
         <activity android:name=".ViewPropActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
@@ -42,6 +49,16 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".ViewTermActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ViewSyllActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!-- List Pages -->
 
         <activity android:name=".ListEvidActivity"
             android:configChanges="orientation"
@@ -55,6 +72,8 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
+
+        <!-- Submission Pages -->
 
         <activity android:name=".SubmitPropActivity"
             android:windowSoftInputMode="adjustPan"
@@ -73,6 +92,8 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
+
+        <!-- Search Activity -->
 
         <activity android:name=".SearchActivity"
             android:configChanges="orientation"

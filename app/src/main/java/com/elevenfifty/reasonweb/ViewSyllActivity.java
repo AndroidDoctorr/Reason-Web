@@ -20,7 +20,7 @@ public class ViewSyllActivity extends ActionBarActivity {
     @Bind(R.id.submit_syll)
     Button submit_syll;
 
-    private String TAG = "Syll View";
+    private String TAG = "Syll View: ";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

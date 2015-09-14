@@ -19,8 +19,65 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <!--Conclusion (target Proposition)-->
+    <!---->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/prop_title"
+        android:text="Proposition:"
+        android:textSize="20sp"
+        android:textColor="@color/header"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/toolbar"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/prop_type"
+        android:text="Empty Proposition (Probably loading...)"
+        android:textSize="16sp"
+        android:textColor="@color/header"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/prop_title"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subject_text"
+        android:text="Subject"
+        android:minHeight="40dp"
+        android:textSize="16sp"
+        android:padding="5dp"
+        android:textColor="@color/text_main"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/prop_type"
+        android:background="@drawable/rounded_purple"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/predicate_text"
+        android:text="Predicate"
+        android:minHeight="100dp"
+        android:textSize="16sp"
+        android:padding="5dp"
+        android:textColor="@color/text_main"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/subject_text"
+        android:background="@drawable/rounded_purple"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/placeholder"
+        android:text="This is where the certainty should go. Also buttons to the Evidence and Syllogism pages?"
+        android:textSize="12sp"
+        android:textColor="@color/header"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/submit_prop"/>
 
     <Button
         android:layout_width="match_parent"

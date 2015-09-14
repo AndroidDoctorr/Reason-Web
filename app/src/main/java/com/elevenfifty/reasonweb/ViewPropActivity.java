@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -23,10 +24,17 @@ import butterknife.OnClick;
  */
 
 public class ViewPropActivity extends ActionBarActivity {
+    @Bind(R.id.subject_text)
+    TextView subject_text;
+    @Bind(R.id.predicate_text)
+    TextView predicate_text;
+    @Bind(R.id.prop_type)
+    TextView prop_type_text;
+
     @Bind(R.id.submit_prop)
     Button submit_prop;
 
-    private final String TAG = "Prop View";
+    private final String TAG = "Prop View: ";
     int xi;
     int yi;
 

@@ -12,7 +12,7 @@
         android:padding="5dp"
         android:textSize="14sp"
         android:textColor="@color/text_main"
-        android:id="@+id/search_item_subject"
+        android:id="@+id/subject"
         android:text="Subject"/>
 
     <ImageView
@@ -30,7 +30,7 @@
         android:padding="5dp"
         android:textSize="14sp"
         android:textColor="@color/text_main"
-        android:id="@+id/search_item_predicate"
+        android:id="@+id/predicate"
         android:text="Predicate"/>
 
 </LinearLayout>

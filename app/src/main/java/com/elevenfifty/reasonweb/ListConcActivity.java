@@ -11,8 +11,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Andrew on 7/28/2015.
@@ -20,6 +25,10 @@ import com.parse.ParseUser;
  */
 
 public class ListConcActivity extends ActionBarActivity {
+
+    @Bind(R.id.conc_back)
+    TextView conc_back;
+
     private String TAG = "Evidence List";
     int xi;
     int yi;
@@ -28,6 +37,7 @@ public class ListConcActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_conc);
+        ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,6 +104,19 @@ public class ListConcActivity extends ActionBarActivity {
             default :
                 return super.onTouchEvent(event);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        overridePendingTransition(R.anim.in_up, R.anim.out_up);
+        super.onBackPressed();
+    }
+
+    @OnClick(R.id.conc_back)
+    public void goBack() {
+        Intent intent = new Intent(ListConcActivity.this, ViewPropActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.in_up, R.anim.out_up);
     }
 
     @Override
