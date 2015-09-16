@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_purple">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:title="@string/main_title"
+        app:subtitleTextAppearance="@color/header"
+        app:titleTextAppearance="@color/header"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirm_prop_title"
+        android:layout_below="@+id/toolbar"
+        android:text="Confirm New Proposition:"
+        android:textSize="20sp"
+        android:textColor="@color/header"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:layout_marginTop="40dp"
+        android:layout_margin="5dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirm_proptype"
+        android:layout_below="@+id/confirm_prop_title"
+        android:text="Proposition Type"
+        android:textSize="16sp"
+        android:textColor="@color/header"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:layout_margin="5dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirm_subject"
+        android:layout_below="@+id/confirm_proptype"
+        android:text="Subject"
+        android:textColor="@color/text_main"
+        android:background="@drawable/rounded_purple"
+        android:padding="5dp"
+        android:gravity="top"
+        android:textSize="16sp"
+        android:layout_margin="5dp"
+        android:minHeight="60dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirm_predicate"
+        android:layout_below="@+id/confirm_subject"
+        android:text="Predicate"
+        android:textColor="@color/text_main"
+        android:background="@drawable/rounded_purple"
+        android:padding="5dp"
+        android:gravity="top"
+        android:textSize="16sp"
+        android:layout_margin="5dp"
+        android:minHeight="100dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2"
+        android:layout_margin="5dp"
+        android:id="@+id/button_layout">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Back to Edit"
+            android:id="@+id/back_button"
+            android:background="@drawable/rounded_white"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Submit New Proposition"
+            android:id="@+id/new_prop_button"
+            android:background="@drawable/rounded_white"/>
+    </LinearLayout>
+</RelativeLayout>

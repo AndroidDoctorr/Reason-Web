@@ -1,5 +1,6 @@
 package com.elevenfifty.reasonweb;
 
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +12,9 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -126,10 +129,12 @@ public class SubmitPropActivity extends ActionBarActivity {
 
     private static String subjectStr = "";
     private static String predVerb;
+    private static String qual1Str;
+    private static String qual2Str;
     private static String predicateStr = "";
     private static String objectStr;
     private static String adjectiveStr;
-    private static String preposition;
+    private static String prepStr;
     private static String propStr;
 
     ParseQuery<Term> subjectQuery;
@@ -226,18 +231,25 @@ public class SubmitPropActivity extends ActionBarActivity {
 
                 if (progress < 5) {
                     qualifier_1.setText("No");
+                    qual1Str = "No";
                 } else if (progress < 20) {
                     qualifier_1.setText("Few");
+                    qual1Str = "Few";
                 } else if (progress < 40) {
                     qualifier_1.setText("Some");
+                    qual1Str = "Some";
                 } else if (progress < 60) {
                     qualifier_1.setText("Many");
+                    qual1Str = "Many";
                 } else if (progress < 80) {
                     qualifier_1.setText("Most");
+                    qual1Str = "Most";
                 } else if (progress < 95) {
                     qualifier_1.setText("Most");
+                    qual1Str = "Most";
                 } else {
                     qualifier_1.setText("All");
+                    qual1Str = "All";
                 }
             }
             @Override
@@ -260,18 +272,25 @@ public class SubmitPropActivity extends ActionBarActivity {
 
                 if (progress < 5) {
                     qualifier_2.setText("never");
+                    qual2Str = "never";
                 } else if (progress < 20) {
                     qualifier_2.setText("rarely");
+                    qual2Str = "rarely";
                 } else if (progress < 40) {
                     qualifier_2.setText("occasionally");
+                    qual2Str = "occasionally";
                 } else if (progress < 60) {
                     qualifier_2.setText("often");
+                    qual2Str = "often";
                 } else if (progress < 80) {
                     qualifier_2.setText("usually");
+                    qual2Str = "usually";
                 } else if (progress < 95) {
                     qualifier_2.setText("almost always");
+                    qual2Str = "almost always";
                 } else {
                     qualifier_2.setText("always");
+                    qual2Str = "always";
                 }
             }
 
@@ -282,7 +301,6 @@ public class SubmitPropActivity extends ActionBarActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
-
 
 
 
@@ -299,7 +317,6 @@ public class SubmitPropActivity extends ActionBarActivity {
         object_list.addFooterView(v3);
         View v4 = getLayoutInflater().inflate(R.layout.item_add_term, null);
         adjective_list.addFooterView(v4);
-
 
 
 
@@ -618,41 +635,104 @@ public class SubmitPropActivity extends ActionBarActivity {
 
     @OnClick(R.id.submit_prop)
     public void submitProp() {
-        Log.d(TAG, "Submit New Prop");
-        Prop newProp = new Prop();
+        //Confirmation dialog
 
-        JSONArray terms = new JSONArray();
-        terms.put(subject);
-        terms.put(predicate);
-        if (object_search.getVisibility() == View.VISIBLE) {
-            terms.put(object);
+        final Dialog dialog = new Dialog(this, R.style.Dialog_No_Border);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        LayoutInflater dialog_inflater = LayoutInflater.from(this);
+        View dialog_view = dialog_inflater.inflate(R.layout.confirm_prop, null);
+
+        TextView confirm_subject = (TextView) dialog_view.findViewById(R.id.confirm_subject);
+        TextView confirm_predicate = (TextView) dialog_view.findViewById(R.id.confirm_predicate);
+        TextView confirm_proptype = (TextView) dialog_view.findViewById(R.id.confirm_proptype);
+
+        confirm_subject.setText(subjectStr);
+        confirm_predicate.setText(predicateStr);
+
+        if (propType.equals("A")) {
+            confirm_proptype.setText(propType + " - Universal Affirmative");
+        } else if (propType.equals("E")) {
+            confirm_proptype.setText(propType + " - Universal Negative");
+        } else if (propType.equals("I")) {
+            confirm_proptype.setText(propType + " - Particular Affirmative");
+        } else if (propType.equals("O")) {
+            confirm_proptype.setText(propType + " - Particular Negative");
+        } else {
+            Log.e(TAG, "Prop Type missing!!");
+            confirm_proptype.setText("Prop Type missing...");
         }
-        if (adjective_search.getVisibility() == View.VISIBLE) {
-            terms.put(adjective);
-        }
 
-        Log.d(TAG, "prop: " + propStr);
-        Log.d(TAG, "type: " + propType);
-        Log.d(TAG, "subject: " + subjectStr);
-        Log.d(TAG, "predicate: " + predicateStr);
+        Button back_button = (Button) dialog_view.findViewById(R.id.back_button);
+        Button new_prop_button = (Button) dialog_view.findViewById(R.id.new_prop_button);
 
-        newProp.setTerms(terms);
-        newProp.setSubject(subjectStr);
-        newProp.setPredicate(predicateStr);
-        newProp.setProp(propStr);
-        newProp.setPropType(propType);
-        newProp.setSearchStr(propStr.toLowerCase());
-
-        newProp.saveInBackground(new SaveCallback() {
+        View.OnClickListener m_clickListener = new View.OnClickListener(){
             @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Toast.makeText(SubmitPropActivity.this, "Proposition Saved: \"" + propStr + "\"", Toast.LENGTH_LONG).show();
-                } else {
-                    Log.e(TAG, e.getMessage());
+            public void onClick(View p_v) {
+                switch (p_v.getId()) {
+                    case R.id.back_button:
+                        Log.d(TAG, "Back to edit");
+                        dialog.dismiss();
+                        break;
+                    case R.id.new_prop_button:
+
+                        Log.d(TAG, "Submit New Prop");
+                        final Prop newProp = new Prop();
+
+                        JSONArray terms = new JSONArray();
+                        terms.put(subject);
+                        terms.put(predicate);
+                        if (object_search.getVisibility() == View.VISIBLE) {
+                            terms.put(object);
+                        }
+                        if (adjective_search.getVisibility() == View.VISIBLE) {
+                            terms.put(adjective);
+                        }
+                        //Upload image from file
+                        Log.d(TAG, "prop: " + propStr);
+                        Log.d(TAG, "type: " + propType);
+                        Log.d(TAG, "subject: " + subjectStr);
+                        Log.d(TAG, "predicate: " + predicateStr);
+
+                        newProp.setTerms(terms);
+                        newProp.setSubject(subjectStr);
+                        newProp.setPredicate(predicateStr);
+                        newProp.setProp(propStr);
+                        newProp.setPropType(propType);
+                        newProp.setSearchStr(propStr.toLowerCase());
+
+                        newProp.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    Toast.makeText(SubmitPropActivity.this, "Proposition Saved: \"" + propStr + "\"", Toast.LENGTH_LONG).show();
+
+                                    Intent intent = new Intent(SubmitPropActivity.this, ViewPropActivity.class);
+                                    intent.putExtra("propID", newProp.getObjectId());
+                                    startActivity(intent);
+                                } else {
+                                    Log.e(TAG, e.getMessage());
+                                }
+                            }
+                        });
+                    default:
+                        dialog.cancel();
+                        break;
                 }
             }
-        });
+        };
+
+        back_button.setOnClickListener(m_clickListener);
+        new_prop_button.setOnClickListener(m_clickListener);
+
+        dialog.setContentView(dialog_view);
+        dialog.show();
+
+
+
+
+
+
 
         //TODO: Go to Prop View with new Prop (put into intent)
     }
@@ -676,7 +756,9 @@ public class SubmitPropActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
-            //TODO: Get/set term from SubmitTermActivity
+
+            //TODO: Make sure selected/new terms come from new term activity!!
+
             if(resultCode == RESULT_OK){
                 String termID = data.getStringExtra("termID");
                 final String where = data.getStringExtra("where");
@@ -779,7 +861,7 @@ public class SubmitPropActivity extends ActionBarActivity {
 
         if (predicate != null) {
             Log.d(TAG, "Predicate exists");
-            //Set up for type A
+            //Set up for type
             if (predicate.getType().equals("noun")) {
 
                 //Noun Layout
@@ -792,7 +874,7 @@ public class SubmitPropActivity extends ActionBarActivity {
                 object_search.setVisibility(View.INVISIBLE);
                 adjective_switch.setVisibility(View.VISIBLE);
 
-                if ((subject != null) && (subject.getTypeA().equals("singular"))) {
+                if ((subject != null) && (subject.getTypeB().equals("singular"))) {
                     Log.d(TAG,"singular noun");
                     pickVerb("verb s");
                     predVerb = "is";
@@ -819,7 +901,7 @@ public class SubmitPropActivity extends ActionBarActivity {
                 than.setVisibility(View.INVISIBLE);
                 adjective_switch.setVisibility(View.INVISIBLE);
 
-                if ((subject != null) && (subject.getTypeA().equals("singular"))) {
+                if ((subject != null) && (subject.getTypeB().equals("singular"))) {
                     pickVerb("helper 1s");
                     predVerb = "";
                 } else {
@@ -861,7 +943,7 @@ public class SubmitPropActivity extends ActionBarActivity {
                 prep.setVisibility(View.INVISIBLE);
                 adjective_switch.setVisibility(View.INVISIBLE);
 
-                if ((subject != null) && (subject.getTypeA().equals("singular"))) {
+                if ((subject != null) && (subject.getTypeB().equals("singular"))) {
                     pickVerb("helper 2s");
                     predVerb = "is";
                 } else {
@@ -892,8 +974,13 @@ public class SubmitPropActivity extends ActionBarActivity {
         } else {
             //Default Predicate View
             Log.d(TAG,"default predicate view");
-            pickVerb("verb p");
-            predVerb = "are";
+            if ((subject != null) && (subject.getTypeB().equals("singular"))) {
+                pickVerb("verb s");
+                predVerb = "is";
+            } else {
+                pickVerb("verb p");
+                predVerb = "are";
+            }
             predicateOK = false;
 
             of.setVisibility(View.INVISIBLE);
@@ -972,18 +1059,18 @@ public class SubmitPropActivity extends ActionBarActivity {
     public void buildPropStr() {
         Log.d(TAG, "Building Prop String...");
         //TODO: Experiment with different types, make sure this works right!!!!
-        preposition = prep.getSelectedItem().toString();
+        prepStr = prep.getSelectedItem().toString();
 
         if (qualifier_1.getVisibility() == View.VISIBLE) {
-            subjectStr += qualifier_1.getText() + " ";
+            subjectStr += qual1Str + " ";
         }
 
         subjectStr += subject.getTerm();
         if (subject.getCount() > 0) {
-            subjectStr += " (" + subject.getCount() + ") ";
+            subjectStr += " (" + subject.getCount() + ")";
         }
 
-        predicateStr = predVerb + " " + qualifier_2.getText() + " ";
+        predicateStr = " " + predVerb + " " + qual2Str + " ";
 
         if (predicate.getType().equals("noun")) {
             //Noun predicate
@@ -1006,7 +1093,7 @@ public class SubmitPropActivity extends ActionBarActivity {
             } else if (predicate.getTypeA().equals("transitive")) {
                 //Transitive
 
-                predicateStr += predicate.getTerm() + " " + preposition + " " + object.getTerm();
+                predicateStr += predicate.getTerm() + " " + prepStr + " " + object.getTerm();
                 if (object.getCount() > 0) {
                     predicateStr += " (" + object.getCount() + ").";
                 }

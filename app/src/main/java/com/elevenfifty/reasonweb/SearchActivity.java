@@ -217,7 +217,7 @@ public class SearchActivity extends ActionBarActivity {
 
                     if (newText.length() > 1) {
                         propQuery = ParseQuery.getQuery(Prop.class);
-                        propQuery.whereContains("prop", newText);
+                        propQuery.whereContains("searchStr", newText);
                         propQuery.orderByDescending("createdAt");
 
                         propQuery.findInBackground(new FindCallback<Prop>() {
@@ -244,6 +244,15 @@ public class SearchActivity extends ActionBarActivity {
             };
             search.setOnQueryTextListener(queryTextListener);
         }
+
+        search_results.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(SearchActivity.this, ViewPropActivity.class);
+                intent.putExtra("propID", props.get(position).getObjectId());
+                startActivity(intent);
+            }
+        });
     }
 
     @OnClick(R.id.syll_search)

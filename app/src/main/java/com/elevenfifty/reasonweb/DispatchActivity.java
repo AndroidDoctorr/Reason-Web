@@ -29,6 +29,7 @@ public class DispatchActivity extends Activity {
         float density  = getResources().getDisplayMetrics().density;
         Globals.dpHeight = outMetrics.heightPixels / density;
         Globals.dpWidth  = outMetrics.widthPixels / density;
+        Globals.width = (Globals.dpWidth + 50.f)*2;
 
         if (ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
             Intent intent = new Intent(DispatchActivity.this, LoginActivity.class);

@@ -321,7 +321,7 @@ public class SubmitTermActivity extends ActionBarActivity {
                         newTerm.setType(type);
                         newTerm.setTypeA(typeA);
                         newTerm.setTypeB(typeB);
-                        newTerm.setSearchStr(termStr.toLowerCase() + definitionStr.toLowerCase());
+                        newTerm.setSearchStr(termStr.toLowerCase());
 
                         confirmTerm(newTerm);
 

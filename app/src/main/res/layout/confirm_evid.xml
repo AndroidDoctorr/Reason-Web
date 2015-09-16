@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_orange">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:title="@string/main_title"
+        app:subtitleTextAppearance="@color/header"
+        app:titleTextAppearance="@color/header"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/evidScrollView"
+        android:layout_above="@+id/button_layout"
+        android:layout_below="@+id/toolbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+            <com.parse.ParseImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:scaleType="fitXY"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/confirm_evidence_image"
+                android:contentDescription="evidence image"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:id="@+id/confirm_evid_title"
+                android:text="Confirm New Evidence"
+                android:background="@drawable/rounded_orange"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirm_evid_description"
+                android:text="Description"
+                android:textColor="@color/text_main"
+                android:background="@drawable/rounded_orange"
+                android:padding="3dp"
+                android:gravity="top"
+                android:textSize="16sp"
+                android:layout_margin="5dp"
+                android:minHeight="200dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirm_evid_links"
+                android:text="Links"
+                android:textColor="@color/blue"
+                android:background="@drawable/rounded_orange"
+                android:padding="3dp"
+                android:gravity="top"
+                android:textSize="16sp"
+                android:layout_margin="5dp"
+                android:minHeight="100dp"/>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2"
+        android:layout_margin="5dp"
+        android:id="@+id/button_layout">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Back to Edit"
+            android:id="@+id/back_button"
+            android:background="@drawable/rounded_white"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="Submit New Evidence"
+            android:id="@+id/new_evid_button"
+            android:background="@drawable/rounded_white"/>
+    </LinearLayout>
+</RelativeLayout>

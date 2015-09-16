@@ -12,6 +12,10 @@ import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.elevenfifty.reasonweb.Models.Prop;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import butterknife.Bind;
@@ -34,6 +38,8 @@ public class ViewPropActivity extends ActionBarActivity {
     @Bind(R.id.submit_prop)
     Button submit_prop;
 
+    private ParseQuery<Prop> propQuery = ParseQuery.getQuery(Prop.class);
+
     private final String TAG = "Prop View: ";
     int xi;
     int yi;
@@ -47,9 +53,28 @@ public class ViewPropActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //TODO: Try to get prop from intent, if null, load "All Men are Mortal" by default
+        Intent intent = getIntent();
+        try {
+            if (intent.getStringExtra("propID") != null) {
+                propQuery.getInBackground(intent.getStringExtra("propID"), new GetCallback<Prop>() {
+                    @Override
+                    public void done(Prop prop, ParseException e) {
+                        if (e == null) {
+                            subject_text.setText(prop.getSubject());
+                            predicate_text.setText(prop.getPredicate());
+                            prop_type_text.setText(prop.getPropType());
+                        } else {
+                            Log.e(TAG, e.getCode() + ": " + e.getMessage());
+                        }
+                    }
+                });
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+
         //TODO: Make terms clickable - use Linky() thing, to to Term View
-        //TODO: Add type and confidence
+        //TODO: Add confidence/certainty
     }
 
     @Override

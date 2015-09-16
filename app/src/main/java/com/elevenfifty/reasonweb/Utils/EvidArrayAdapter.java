@@ -49,7 +49,7 @@ public class EvidArrayAdapter extends ArrayAdapter<Evid> {
 
         holder.evid_image.setParseFile(evid.getThumbFile());
         holder.evid_title.setText(evid.getTitle());
-        holder.evid_description.setText(evid.getText());
+        holder.evid_description.setText(evid.getDescription());
 
         return convertView;
     }

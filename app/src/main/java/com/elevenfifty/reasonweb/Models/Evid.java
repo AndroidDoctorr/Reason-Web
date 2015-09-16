@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @ParseClassName("Evid")
 public class Evid extends ParseObject {
     private String title;
-    private String text;
+    private String description;
     private ArrayList<Prop> supports;
     private ParseFile imageFile;
     private ParseFile thumbFile;
@@ -38,12 +38,12 @@ public class Evid extends ParseObject {
         put("title",title);
     }
 
-    public String getText() {
-        return getString("title");
+    public String getDescription() {
+        return getString("description");
     }
 
-    public void setText(String text) {
-        put("text",text);
+    public void setDescription(String description) {
+        put("description", description);
     }
 
     public ArrayList<Prop> getSupports() {
