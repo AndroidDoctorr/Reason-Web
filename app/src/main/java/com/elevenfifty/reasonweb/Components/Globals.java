@@ -9,4 +9,5 @@ public class Globals {
     public static float dpHeight;
     public static float dpWidth;
     public static float width;
+    public static String propID;
 }

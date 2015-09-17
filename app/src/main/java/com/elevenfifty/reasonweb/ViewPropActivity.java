@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.elevenfifty.reasonweb.Components.Globals;
 import com.elevenfifty.reasonweb.Models.Prop;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -53,16 +54,33 @@ public class ViewPropActivity extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(com.elevenfifty.reasonweb.R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Intent intent = getIntent();
+        Log.d(TAG, Globals.propID);
+
         try {
-            if (intent.getStringExtra("propID") != null) {
-                propQuery.getInBackground(intent.getStringExtra("propID"), new GetCallback<Prop>() {
+            if (Globals.propID != null) {
+                propQuery.getInBackground(Globals.propID, new GetCallback<Prop>() {
                     @Override
                     public void done(Prop prop, ParseException e) {
                         if (e == null) {
                             subject_text.setText(prop.getSubject());
                             predicate_text.setText(prop.getPredicate());
-                            prop_type_text.setText(prop.getPropType());
+
+                            switch (prop.getPropType()) {
+                                case "A":
+                                    prop_type_text.setText(prop.getPropType() + " - Universal Affirmative");
+                                    break;
+                                case "E":
+                                    prop_type_text.setText(prop.getPropType() + " - Universal Negative");
+                                    break;
+                                case "I":
+                                    prop_type_text.setText(prop.getPropType() + " - Particular Affirmative");
+                                    break;
+                                case "O":
+                                    prop_type_text.setText(prop.getPropType() + " - Particular Negative");
+                                    break;
+                                default:
+                                    break;
+                            }
                         } else {
                             Log.e(TAG, e.getCode() + ": " + e.getMessage());
                         }

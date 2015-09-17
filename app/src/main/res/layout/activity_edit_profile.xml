@@ -96,16 +96,17 @@
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:id="@+id/save_profile"
-                    android:text="@string/save_profile"
+                    android:id="@+id/cancel"
+                    android:text="@string/cancel"
                     android:layout_margin="10dp" />
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"
-                    android:id="@+id/cancel"
-                    android:text="@string/cancel"
+                    android:id="@+id/save_profile"
+                    android:text="@string/save_profile"
                     android:layout_margin="10dp" />
+
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

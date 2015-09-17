@@ -650,17 +650,22 @@ public class SubmitPropActivity extends ActionBarActivity {
         confirm_subject.setText(subjectStr);
         confirm_predicate.setText(predicateStr);
 
-        if (propType.equals("A")) {
-            confirm_proptype.setText(propType + " - Universal Affirmative");
-        } else if (propType.equals("E")) {
-            confirm_proptype.setText(propType + " - Universal Negative");
-        } else if (propType.equals("I")) {
-            confirm_proptype.setText(propType + " - Particular Affirmative");
-        } else if (propType.equals("O")) {
-            confirm_proptype.setText(propType + " - Particular Negative");
-        } else {
-            Log.e(TAG, "Prop Type missing!!");
-            confirm_proptype.setText("Prop Type missing...");
+        switch (propType) {
+            case "A":
+                confirm_proptype.setText(propType + " - Universal Affirmative");
+                break;
+            case "E":
+                confirm_proptype.setText(propType + " - Universal Negative");
+                break;
+            case "I":
+                confirm_proptype.setText(propType + " - Particular Affirmative");
+                break;
+            case "O":
+                confirm_proptype.setText(propType + " - Particular Negative");
+                break;
+            default:
+                Log.e(TAG, "Prop Type missing!!");
+                confirm_proptype.setText("Prop Type missing...");
         }
 
         Button back_button = (Button) dialog_view.findViewById(R.id.back_button);
@@ -708,7 +713,7 @@ public class SubmitPropActivity extends ActionBarActivity {
                                     Toast.makeText(SubmitPropActivity.this, "Proposition Saved: \"" + propStr + "\"", Toast.LENGTH_LONG).show();
 
                                     Intent intent = new Intent(SubmitPropActivity.this, ViewPropActivity.class);
-                                    intent.putExtra("propID", newProp.getObjectId());
+                                    Globals.propID = newProp.getObjectId();
                                     startActivity(intent);
                                 } else {
                                     Log.e(TAG, e.getMessage());
@@ -727,14 +732,6 @@ public class SubmitPropActivity extends ActionBarActivity {
 
         dialog.setContentView(dialog_view);
         dialog.show();
-
-
-
-
-
-
-
-        //TODO: Go to Prop View with new Prop (put into intent)
     }
 
     @Override

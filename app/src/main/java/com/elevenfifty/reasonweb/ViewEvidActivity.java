@@ -1,5 +1,6 @@
 package com.elevenfifty.reasonweb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -67,6 +68,8 @@ public class ViewEvidActivity extends ActionBarActivity {
 
         //TODO: Inflate view with info from Evid object
     }
+
+    //Hashtag Stuff
 
     private void Linky(String a, TextView textView) {
 
@@ -142,7 +145,10 @@ public class ViewEvidActivity extends ActionBarActivity {
             } else {
                 // pass url to webview activity
                 Log.d(TAG,"link");
-                //TODO: Make web view
+                Intent intent = new Intent(ViewEvidActivity.this, WebviewActivity.class);
+                intent.putExtra("url", text);
+                //TODO: start for result so it comes back to this???
+                startActivity(intent);
             }
         }
     }

@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/prop_type"
-        android:text="Empty Proposition (Probably loading...)"
+        android:text="A - Universal Affirmative"
         android:textSize="16sp"
         android:textColor="@color/header"
         android:layout_margin="5dp"

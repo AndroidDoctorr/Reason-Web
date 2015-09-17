@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.elevenfifty.reasonweb.Components.Globals;
 import com.elevenfifty.reasonweb.Models.Evid;
 import com.elevenfifty.reasonweb.Models.Prop;
 import com.elevenfifty.reasonweb.Models.Syll;
@@ -35,8 +36,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-//import android.view.GestureDetector;
 
 /**
  * Created by Andrew on 7/28/2015.
@@ -93,6 +92,8 @@ public class SearchActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
 
         searchManager = (SearchManager) SearchActivity.this.getSystemService(Context.SEARCH_SERVICE);
+
+        searchProp();
     }
 
     // Buttons to switch between Search Categories
@@ -128,43 +129,43 @@ public class SearchActivity extends ActionBarActivity {
         evid_search.setTextColor(this.getResources().getColor(R.color.text_main));
         search_results.setBackgroundResource(R.drawable.rounded_green);
 
-        if (search != null) {
-            search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            search.setIconifiedByDefault(false);
 
-            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-                public boolean onQueryTextChange(String newText) {
-                    Log.d("TEST","on query text change");
+        search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        search.setIconifiedByDefault(false);
 
-                    if (newText.length() > 1) {
-                        termQuery = ParseQuery.getQuery(Term.class);
-                        termQuery.whereContains("term", newText);
-                        termQuery.orderByDescending("createdAt");
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextChange(String newText) {
+                Log.d("TEST","on query text change");
 
-                        termQuery.findInBackground(new FindCallback<Term>() {
-                            @Override
-                            public void done(List<Term> list, ParseException e) {
-                                terms.clear();
-                                for (Term term : list) {
-                                    terms.add(term);
-                                }
-                                Log.d("TEST", "populating term list");
-                                termArrayAdapter = new TermSearchAdapter(getApplicationContext(),
-                                        R.layout.search_item_term, terms);
-                                termArrayAdapter.updateAdapter(terms);
-                                search_results.setAdapter(termArrayAdapter);
+                if (newText.length() > 1) {
+                    termQuery = ParseQuery.getQuery(Term.class);
+                    termQuery.whereContains("term", newText);
+                    termQuery.orderByDescending("createdAt");
+
+                    termQuery.findInBackground(new FindCallback<Term>() {
+                        @Override
+                        public void done(List<Term> list, ParseException e) {
+                            terms.clear();
+                            for (Term term : list) {
+                                terms.add(term);
                             }
-                        });
-                    }
-                    return true;
+                            Log.d("TEST", "populating term list");
+                            termArrayAdapter = new TermSearchAdapter(getApplicationContext(),
+                                    R.layout.search_item_term, terms);
+                            termArrayAdapter.updateAdapter(terms);
+                            search_results.setAdapter(termArrayAdapter);
+                        }
+                    });
                 }
+                return true;
+            }
 
-                public boolean onQueryTextSubmit(String query) {
-                    return true;
-                }
-            };
-            search.setOnQueryTextListener(queryTextListener);
-        }
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        };
+        search.setOnQueryTextListener(queryTextListener);
+
 
         search_results.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -207,49 +208,47 @@ public class SearchActivity extends ActionBarActivity {
         evid_search.setTextColor(this.getResources().getColor(R.color.text_main));
         search_results.setBackgroundResource(R.drawable.rounded_purple);
 
-        if (search != null) {
-            search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            search.setIconifiedByDefault(false);
+        search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        search.setIconifiedByDefault(false);
 
-            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-                public boolean onQueryTextChange(String newText) {
-                    Log.d("TEST","on query text change");
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextChange(String newText) {
+                Log.d("TEST","on query text change");
 
-                    if (newText.length() > 1) {
-                        propQuery = ParseQuery.getQuery(Prop.class);
-                        propQuery.whereContains("searchStr", newText);
-                        propQuery.orderByDescending("createdAt");
+                if (newText.length() > 1) {
+                    propQuery = ParseQuery.getQuery(Prop.class);
+                    propQuery.whereContains("searchStr", newText);
+                    propQuery.orderByDescending("createdAt");
 
-                        propQuery.findInBackground(new FindCallback<Prop>() {
-                            @Override
-                            public void done(List<Prop> list, ParseException e) {
-                                props.clear();
-                                for (Prop prop : list) {
-                                    props.add(prop);
-                                }
-                                Log.d("TEST", "populating prop list");
-                                propArrayAdapter = new PropArrayAdapter(getApplicationContext(),
-                                        R.layout.search_item_prop, props);
-                                propArrayAdapter.updateAdapter(props);
-                                search_results.setAdapter(propArrayAdapter);
+                    propQuery.findInBackground(new FindCallback<Prop>() {
+                        @Override
+                        public void done(List<Prop> list, ParseException e) {
+                            props.clear();
+                            for (Prop prop : list) {
+                                props.add(prop);
                             }
-                        });
-                    }
-                    return true;
+                            Log.d("TEST", "populating prop list");
+                            propArrayAdapter = new PropArrayAdapter(getApplicationContext(),
+                                    R.layout.search_item_prop, props);
+                            propArrayAdapter.updateAdapter(props);
+                            search_results.setAdapter(propArrayAdapter);
+                        }
+                    });
                 }
+                return true;
+            }
 
-                public boolean onQueryTextSubmit(String query) {
-                    return true;
-                }
-            };
-            search.setOnQueryTextListener(queryTextListener);
-        }
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        };
+        search.setOnQueryTextListener(queryTextListener);
 
         search_results.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SearchActivity.this, ViewPropActivity.class);
-                intent.putExtra("propID", props.get(position).getObjectId());
+                Globals.propID = props.get(position).getObjectId();
                 startActivity(intent);
             }
         });
@@ -286,43 +285,41 @@ public class SearchActivity extends ActionBarActivity {
         evid_search.setTextColor(this.getResources().getColor(R.color.text_main));
         search_results.setBackgroundResource(R.drawable.rounded_blue);
 
-        if (search != null) {
-            search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            search.setIconifiedByDefault(false);
+        search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        search.setIconifiedByDefault(false);
 
-            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-                public boolean onQueryTextChange(String newText) {
-                    Log.d("TEST","on query text change");
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextChange(String newText) {
+                Log.d("TEST","on query text change");
 
-                    if (newText.length() > 1) {
-                        syllQuery = ParseQuery.getQuery(Syll.class);
-                        syllQuery.whereContains("term", newText);
-                        syllQuery.orderByDescending("createdAt");
+                if (newText.length() > 1) {
+                    syllQuery = ParseQuery.getQuery(Syll.class);
+                    syllQuery.whereContains("term", newText);
+                    syllQuery.orderByDescending("createdAt");
 
-                        syllQuery.findInBackground(new FindCallback<Syll>() {
-                            @Override
-                            public void done(List<Syll> list, ParseException e) {
-                                sylls.clear();
-                                for (Syll syll : list) {
-                                    sylls.add(syll);
-                                }
-                                Log.d("TEST", "populating syll list");
-                                syllArrayAdapter = new SyllArrayAdapter(getApplicationContext(),
-                                        R.layout.list_item_syll, sylls);
-                                syllArrayAdapter.updateAdapter(sylls);
-                                search_results.setAdapter(syllArrayAdapter);
+                    syllQuery.findInBackground(new FindCallback<Syll>() {
+                        @Override
+                        public void done(List<Syll> list, ParseException e) {
+                            sylls.clear();
+                            for (Syll syll : list) {
+                                sylls.add(syll);
                             }
-                        });
-                    }
-                    return true;
+                            Log.d("TEST", "populating syll list");
+                            syllArrayAdapter = new SyllArrayAdapter(getApplicationContext(),
+                                    R.layout.list_item_syll, sylls);
+                            syllArrayAdapter.updateAdapter(sylls);
+                            search_results.setAdapter(syllArrayAdapter);
+                        }
+                    });
                 }
+                return true;
+            }
 
-                public boolean onQueryTextSubmit(String query) {
-                    return true;
-                }
-            };
-            search.setOnQueryTextListener(queryTextListener);
-        }
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        };
+        search.setOnQueryTextListener(queryTextListener);
     }
 
     @OnClick(R.id.evid_search)
@@ -356,43 +353,41 @@ public class SearchActivity extends ActionBarActivity {
         evid_search.setTextColor(this.getResources().getColor(R.color.header));
         search_results.setBackgroundResource(R.drawable.rounded_orange);
 
-        if (search != null) {
-            search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            search.setIconifiedByDefault(false);
+        search.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        search.setIconifiedByDefault(false);
 
-            SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-                public boolean onQueryTextChange(String newText) {
-                    Log.d("TEST","on query text change");
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextChange(String newText) {
+                Log.d("TEST","on query text change");
 
-                    if (newText.length() > 1) {
-                        evidQuery = ParseQuery.getQuery(Evid.class);
-                        evidQuery.whereContains("evid", newText);
-                        evidQuery.orderByDescending("createdAt");
+                if (newText.length() > 1) {
+                    evidQuery = ParseQuery.getQuery(Evid.class);
+                    evidQuery.whereContains("evid", newText);
+                    evidQuery.orderByDescending("createdAt");
 
-                        evidQuery.findInBackground(new FindCallback<Evid>() {
-                            @Override
-                            public void done(List<Evid> list, ParseException e) {
-                                evids.clear();
-                                for (Evid evid : list) {
-                                    evids.add(evid);
-                                }
-                                Log.d("TEST", "populating list");
-                                ArrayAdapter termsArrayAdapter = new EvidArrayAdapter(getApplicationContext(),
-                                        R.layout.list_item_evid, evids);
-                                evidArrayAdapter.updateAdapter(evids);
-                                search_results.setAdapter(termsArrayAdapter);
+                    evidQuery.findInBackground(new FindCallback<Evid>() {
+                        @Override
+                        public void done(List<Evid> list, ParseException e) {
+                            evids.clear();
+                            for (Evid evid : list) {
+                                evids.add(evid);
                             }
-                        });
-                    }
-                    return true;
+                            Log.d("TEST", "populating list");
+                            ArrayAdapter termsArrayAdapter = new EvidArrayAdapter(getApplicationContext(),
+                                    R.layout.list_item_evid, evids);
+                            evidArrayAdapter.updateAdapter(evids);
+                            search_results.setAdapter(termsArrayAdapter);
+                        }
+                    });
                 }
+                return true;
+            }
 
-                public boolean onQueryTextSubmit(String query) {
-                    return true;
-                }
-            };
-            search.setOnQueryTextListener(queryTextListener);
-        }
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        };
+        search.setOnQueryTextListener(queryTextListener);
     }
 
     @Override

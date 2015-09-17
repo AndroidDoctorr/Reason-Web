@@ -7,7 +7,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +33,8 @@ import org.json.JSONArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -107,7 +115,7 @@ public class SubmitEvidActivity extends ActionBarActivity {
 
                         imageFile = new ParseFile("image.png", imageData);
 
-                        Bitmap thumb = Bitmap.createScaledBitmap(imageBitmap, 256, 256, false);
+                        Bitmap thumb = Bitmap.createScaledBitmap(imageBitmap, 512, 512, false);
 
                         ByteArrayOutputStream thStream = new ByteArrayOutputStream();
                         thumb.compress(Bitmap.CompressFormat.PNG, 100, thStream);
@@ -171,7 +179,7 @@ public class SubmitEvidActivity extends ActionBarActivity {
 
                         Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(pickPhoto , 1);
+                        startActivityForResult(pickPhoto, 1);
                         dialog.dismiss();
                         break;
                     default:
@@ -207,8 +215,8 @@ public class SubmitEvidActivity extends ActionBarActivity {
         confirm_evid_description.setText(description);
         confirm_evidence_image.setParseFile(imageFile);
 
-        Button back_button = (Button) findViewById(R.id.back_button);
-        Button new_evid_button = (Button) findViewById(R.id.new_evid_button);
+        Button back_button = (Button) dialog_view.findViewById(R.id.back_button);
+        Button new_evid_button = (Button) dialog_view.findViewById(R.id.new_evid_button);
 
         View.OnClickListener m_clickListener = new View.OnClickListener(){
             @Override
@@ -254,5 +262,88 @@ public class SubmitEvidActivity extends ActionBarActivity {
 
         dialog.setContentView(dialog_view);
         dialog.show();
+    }
+
+    //Hashtag Stuff:
+
+    private void Linkfiy(String a, TextView textView) {
+
+        Pattern urlPattern = Patterns.WEB_URL;
+        Pattern mentionPattern = Pattern.compile("(@[A-Za-z0-9_-]+)");
+        Pattern hashtagPattern = Pattern.compile("#(\\w+|\\W+)");
+
+        Matcher o = hashtagPattern.matcher(a);
+        Matcher mention = mentionPattern.matcher(a);
+        Matcher weblink = urlPattern.matcher(a);
+
+        SpannableString spannableString = new SpannableString(a);
+
+        // --- #hashtag
+        while (o.find()) {
+            spannableString.setSpan(new NonUnderlinedClickableSpan(o.group(),
+                            0), o.start(), o.end(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        // --- @mention
+        while (mention.find()) {
+            spannableString.setSpan(
+                    new NonUnderlinedClickableSpan(mention.group(), 1), mention.start(), mention.end(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        // --- @weblink
+        while (weblink.find()) {
+            spannableString.setSpan(
+                    new NonUnderlinedClickableSpan(weblink.group(), 2), weblink.start(), weblink.end(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    public class NonUnderlinedClickableSpan extends ClickableSpan {
+
+        int type;// 0-hashtag , 1- mention, 2- url link
+        String text;// Keyword or url
+        String time;
+
+        public NonUnderlinedClickableSpan(String text, int type) {
+            this.text = text;
+            this.type = type;
+            this.time = time;
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            //adding colors
+            if (type == 1)
+                ds.setColor(getApplicationContext().getResources().getColor(
+                        R.color.orange));
+            else if (type == 2)
+                ds.setColor(getApplicationContext().getResources().getColor(
+                        R.color.red));
+            else
+                ds.setColor(getApplicationContext().getResources().getColor(
+                        R.color.blue));
+            ds.setUnderlineText(false);
+            // ds.setTypeface(Typeface.DEFAULT_BOLD);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d("click done", "ok " + text);
+            if (type == 0) {
+                //pass hashtags to activity using intents
+
+            } else if (type == 1) {
+                //do for mentions
+
+            } else {
+                // Don't link from here, just color them blue
+
+            }
+        }
     }
 }

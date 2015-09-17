@@ -26,6 +26,8 @@ public class Prop extends ParseObject {
     private String propType;
     private JSONArray terms;
     private String searchStr;
+    private Integer qual1;
+    private Integer qual2;
 
     public String getProp() {
         return getString("prop");
@@ -73,6 +75,22 @@ public class Prop extends ParseObject {
 
     public void setSearchStr(String searchStr) {
         put("searchStr", searchStr);
+    }
+
+    public Integer getQual1() {
+        return getInt("qual1");
+    }
+
+    public void setQual1(Integer qual1) {
+        put("qual1", qual1);
+    }
+
+    public Integer getQual2() {
+        return getInt("qual2");
+    }
+
+    public void setQual2(Integer qual2) {
+        put("qual2", qual2);
     }
 
     /*public ArrayList<Syll> getReasons() {

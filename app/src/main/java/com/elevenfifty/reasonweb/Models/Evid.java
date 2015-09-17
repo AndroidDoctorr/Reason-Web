@@ -21,10 +21,10 @@ import java.util.ArrayList;
 public class Evid extends ParseObject {
     private String title;
     private String description;
-    private ArrayList<Prop> supports;
     private ParseFile imageFile;
     private ParseFile thumbFile;
     private ArrayList<String> links;
+    private ArrayList<Prop> supports;
     private Double cert;
     private Integer votes;
     private Double voteSum;
