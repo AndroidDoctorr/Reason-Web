@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="CircleLayout">
+        <attr name="cl_center_drawable" format="integer"/>
+        <attr name="cl_item_drawable" format="integer"/>
+
+        <!--
+        <attr name="type">
+            <enum name="Evid" value="Evid" />
+            <enum name="Prop" value="Prop" />
+            <enum name="Syll" value="Syll" />
+            <enum name="Term" value="Term" />
+        </attr>
+        -->
+        <attr name="cl_type" format="string"/>
+        <attr name="cl_center_text" format="string"/>
+
+        <attr name="cl_text_color" format="color"/>
+        <attr name="cl_ray_color" format="color"/>
+
+        <attr name="cl_cRadius" format="dimension"/>
+        <attr name="cl_buffer" format="float"/>
+        <attr name="cl_hasBuffer" format="boolean"/>
+    </declare-styleable>
+
     <!-- CircularImageView Custom Styling -->
     <declare-styleable name="CircularImageView">
 

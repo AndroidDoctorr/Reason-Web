@@ -30,7 +30,7 @@
         android:padding="5dp"
         android:gravity="center_horizontal"/>
 
-    <ListView
+    <!--<ListView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:id="@+id/conc_list"
@@ -40,7 +40,7 @@
         android:layout_margin="10dp"
         android:padding="5dp"
         android:background="@drawable/rounded_green">
-    </ListView>
+    </ListView>-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,5 +53,73 @@
         android:textColor="@color/header"
         android:padding="10dp"
         android:gravity="center_horizontal"/>
+<!--
+    <com.ogaclejapan.arclayout.ArcLayout
+        android:id="@+id/arc_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:arc_origin="center"
+        app:arc_color="#00000000"
+        app:arc_radius="168dp"
+        app:arc_axisRadius="120dp"
+        app:arc_freeAngle="false"
+        app:arc_reverseAngle="false">
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="Conclusion 3"
+            android:textColor="#FF000000"
+            android:background="@drawable/circle_green"
+            app:arc_radius="40dp"
+            app:arc_origin="center" />
+
+        <Button
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:text="Conclusion 2"
+            android:textColor="#FF000000"
+            android:background="@drawable/circle_green"
+            app:arc_radius="20dp"
+            app:arc_axisRadius="40dp"
+            app:arc_origin="center" />
+
+        <Button
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:text="Conclusion 1"
+            android:textColor="#FF000000"
+            android:background="@drawable/circle_green"
+            app:arc_radius="50dp"
+            app:arc_axisRadius="20dp"
+            app:arc_origin="center" />
+
+    </com.ogaclejapan.arclayout.ArcLayout>
+-->
+
+    <com.andrewtorr.reasonweb.Models.CircleLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/conc_layout"
+        app:cl_type="Term"
+        app:cl_center_text="Testing"
+        app:cl_center_drawable="@drawable/circle_green"
+        app:cl_cRadius="80dp"
+        app:cl_hasBuffer="false">
+
+    </com.andrewtorr.reasonweb.Models.CircleLayout>
+
+    <!--<Button
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="Proposition"
+        android:textColor="#FF000000"
+        android:background="@drawable/circle_purple" />-->
 
 </RelativeLayout>

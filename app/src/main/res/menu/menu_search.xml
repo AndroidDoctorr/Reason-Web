@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.elevenfifty.reasonweb.SearchActivity">
+    tools:context="com.andrewtorr.reasonweb.SearchActivity">
     <item android:id="@+id/profile_menu_item"
         android:title="@string/profile"
         android:orderInCategory="1"

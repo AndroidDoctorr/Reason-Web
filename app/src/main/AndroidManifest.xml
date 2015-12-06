@@ -9,14 +9,14 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
-        android:name=".ReasonWebApplication"
+        android:name="com.andrewtorr.reasonweb.ReasonWebApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:windowSoftInputMode="adjustPan"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DispatchActivity"
+            android:name="com.andrewtorr.reasonweb.DispatchActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,76 +27,76 @@
 
         <!-- Login/Profile -->
 
-        <activity android:name=".LoginActivity"
+        <activity android:name="com.andrewtorr.reasonweb.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ProfileActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ProfileActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ProfileEditActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ProfileEditActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
 
         <!-- View Pages -->
 
-        <activity android:name=".ViewPropActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ViewPropActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ViewEvidActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ViewEvidActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ViewTermActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ViewTermActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ViewSyllActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ViewSyllActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
 
         <!-- List Pages -->
 
-        <activity android:name=".ListEvidActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ListEvidActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ListSyllActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ListSyllActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ListConcActivity"
+        <activity android:name="com.andrewtorr.reasonweb.ListConcActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
 
         <!-- Submission Pages -->
 
-        <activity android:name=".SubmitPropActivity"
+        <activity android:name="com.andrewtorr.reasonweb.SubmitPropActivity"
             android:windowSoftInputMode="adjustPan"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SubmitEvidActivity"
+        <activity android:name="com.andrewtorr.reasonweb.SubmitEvidActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SubmitSyllActivity"
+        <activity android:name="com.andrewtorr.reasonweb.SubmitSyllActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SubmitTermActivity"
+        <activity android:name="com.andrewtorr.reasonweb.SubmitTermActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
 
         <!-- Search Activity -->
 
-        <activity android:name=".SearchActivity"
+        <activity android:name="com.andrewtorr.reasonweb.SearchActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
@@ -104,7 +104,7 @@
         <!-- Web View Activity -->
 
         <activity
-            android:name=".WebviewActivity"
+            android:name="com.andrewtorr.reasonweb.WebviewActivity"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
 
